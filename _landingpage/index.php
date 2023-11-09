@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../images/Technological_University_of_the_Philippines_Seal.svg.png" type="image/png">
     <link href="../dist/output.css" rel="stylesheet" />
-    <title>Document</title>
+    <title>TUP-V Evaluation</title>
   </head>
   <body>
     <div class="w-full h-screen">
@@ -15,7 +16,7 @@
           <div class="flex justify-center items-center">
             <img
               class="w-[55px] mr-4"
-              src="images/Technological_University_of_the_Philippines_Seal.svg.png"
+              src="../images/Technological_University_of_the_Philippines_Seal.svg.png"
               alt="tupv-logo"
             />
             <p class="font-bold">
@@ -53,12 +54,12 @@
             class="mt-16 lg:flex flex justify-center items-center lg:justify-start"
           >
             <a
-              href="/student/evaluation/1"
+              href="../_student/"
               class="px-6 py-2 text-[24px] border border-[#C51E3A] rounded-full tracking-wider text-[#C51E3A] font-medium mr-6 hover:bg-[#C51E3A] hover:text-white duration-200"
               >STUDENT</a
             >
             <a
-              href="/faculty/login"
+              href="../_faculty/"
               class="px-6 py-2 text-[24px] border border-[#C51E3A] rounded-full tracking-wider bg-[#C51E3A] text-white font-medium hover:bg-white hover:text-[#C51E3A] duration-200"
               >FACULTY</a
             >
@@ -67,7 +68,7 @@
         <div class="w-full flex justify-center mt-[32px] md:mt-0 mb-10 lg:mb-0">
           <img
             class="w-[200px] md:w-[350px] lg:w-full"
-            src="images/Editorial commision-amico 1.png"
+            src="../images/Editorial commision-amico 1.png"
             alt=""
           />
         </div>
