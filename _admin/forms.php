@@ -16,18 +16,31 @@
 <?php
     include './adminheader.php';
 
+
+    
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Loop through each question and update it in the database
         foreach ($_POST['question'] as $id => $question) {
-            $sql = "UPDATE froms_tbl SET question='$question' WHERE id=$id";
-            if (!mysqli_query($conn, $sql)) {
-                echo "Error: " . mysqli_error($conn);
+            // Use a prepared statement to handle special characters
+            $stmt = $conn->prepare("UPDATE froms_tbl SET question=? WHERE id=?");
+            
+            // Bind parameters
+            $stmt->bind_param("si", $question, $id);
+            
+            // Execute the statement
+            if (!$stmt->execute()) {
+                echo "Error updating record: " . $stmt->error;
             }
+    
+            // Close the statement
+            $stmt->close();
         }
     }
+    ?>
+    
 
 
-?>
+
 
 <div class="p-4 sm:ml-64">
    <div class="p-4 mt-14">
@@ -53,16 +66,16 @@
 <!-- GENERAL FORM TAB ================ -->
     <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="profile" role="tabpanel" aria-labelledby="profile-tab">
     <section class="bg-gray-50 dark:bg-gray-900">
-     
+    <h1 class="text-xl  m-4 font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+             <span class = "text-red-700">G</span>eneral Evaluation Form Editor
+             </h1>
      <div class="w-full-screen bg-white rounded-lg shadow dark:border md:mt-0 xl:p-0 dark:bg-gray-800 dark:border-gray-700">
          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-             <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-             <span class = "text-red-700">G</span>enral Evaluation Form Editor
-             </h1>
+           
              <form class="space-y-4 md:space-y-6" action="#" method = "post">
-
+                <h1 class = "text-sm font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">I. COMMITMENT</h1>
              <?php
-                 $sql = "SELECT * FROM froms_tbl";
+                 $sql = "SELECT * FROM froms_tbl WHERE type = 'GENERAL' AND title = 'TITLE 1'";
                  $result = mysqli_query($conn, $sql);
              
                  if ($result) {
@@ -70,8 +83,74 @@
                  } else {
                      echo "Error: " . mysqli_error($conn);
                  }
-                 
-                 
+                       
+             foreach ($questions as $index => $question): ?>
+   <div class="flex">
+       <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
+       <input type="text" name="question[<?= $question['id'] ?>]" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="<?= $question['question'] ?>">
+   </div>
+<?php endforeach; ?>'
+
+
+
+
+<!-- TITLE 2 -->
+
+<h1 class = "text-sm font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">II. KNOWLEDGE OF SUBJECT</h1>
+             <?php
+                 $sql = "SELECT * FROM froms_tbl WHERE type = 'GENERAL' AND title = 'TITLE 2'";
+                 $result = mysqli_query($conn, $sql);
+             
+                 if ($result) {
+                     $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                 } else {
+                     echo "Error: " . mysqli_error($conn);
+                 }
+                       
+             foreach ($questions as $index => $question): ?>
+   <div class="flex">
+       <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
+       <input type="text" name="question[<?= $question['id'] ?>]" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="<?= $question['question'] ?>">
+   </div>
+<?php endforeach; ?>
+
+
+
+<!-- TITLE 3 -->
+
+<h1 class = "text-sm font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">III. TEACHING OF INDIVIDUAL LEARNING</h1>
+             <?php
+                 $sql = "SELECT * FROM froms_tbl WHERE type = 'GENERAL' AND title = 'TITLE 3'";
+                 $result = mysqli_query($conn, $sql);
+             
+                 if ($result) {
+                     $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                 } else {
+                     echo "Error: " . mysqli_error($conn);
+                 }
+                       
+             foreach ($questions as $index => $question): ?>
+   <div class="flex">
+       <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
+       <input type="text" name="question[<?= $question['id'] ?>]" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="<?= $question['question'] ?>">
+   </div>
+<?php endforeach; ?>
+
+
+
+<!-- TITLE 4 -->
+
+<h1 class = "text-sm font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">IV. MANAGEMENT LEARNING</h1>
+             <?php
+                 $sql = "SELECT * FROM froms_tbl WHERE type = 'GENERAL' AND title = 'TITLE 4'";
+                 $result = mysqli_query($conn, $sql);
+             
+                 if ($result) {
+                     $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                 } else {
+                     echo "Error: " . mysqli_error($conn);
+                 }
+                       
              foreach ($questions as $index => $question): ?>
    <div class="flex">
        <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
@@ -84,7 +163,7 @@
                  <button type="submit" onclick="confirmAndUpdateForm()" class="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-md px-5 py-2.5 text-center ">Update Form</button>
                  </div>
               
-             </form>
+          
          </div>
      </div>
 
@@ -101,20 +180,97 @@
 
     <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
     <section class="bg-gray-50 dark:bg-gray-900">
-     
-     <div class="w-full-screen bg-white rounded-lg shadow dark:border md:mt-0 xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-             <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+    <h1 class="text-xl m-4 font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 <span class = "text-red-700">S</span>elf Evaluation Form Editor
              </h1>
-             <form class="space-y-4 md:space-y-6" action="./update_selfform.php" method="post">
+     <div class="w-full-screen bg-white rounded-lg shadow dark:border md:mt-0 xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+            
+             <!-- <form class="space-y-4 md:space-y-6" action="./update_selfform.php" method="post"> -->
+             <h1 class = "text-sm font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">I. COMMITMENT</h1>
+             <?php
+                 $sql = "SELECT * FROM froms_tbl WHERE type = 'SELF' AND title = 'TITLE 1'";
+                 $result = mysqli_query($conn, $sql);
+             
+                 if ($result) {
+                     $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                 } else {
+                     echo "Error: " . mysqli_error($conn);
+                 }
+                       
+             foreach ($questions as $index => $question): ?>
+   <div class="flex">
+       <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
+       <input type="text" name="question[<?= $question['id'] ?>]" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="<?= $question['question'] ?>">
+   </div>
+<?php endforeach; ?>'
 
-                    <?php foreach ($questions as $index => $question): ?>
-        <div class="flex">
-            <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
-            <input type="text" name="question[<?= $question['id'] ?>]" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="<?= $question['question'] ?>">
-        </div>
-        <?php endforeach; ?>
+
+
+
+<!-- TITLE 2 -->
+
+<h1 class = "text-sm font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">II. KNOWLEDGE OF SUBJECT</h1>
+             <?php
+                 $sql = "SELECT * FROM froms_tbl WHERE type = 'SELF' AND title = 'TITLE 2'";
+                 $result = mysqli_query($conn, $sql);
+             
+                 if ($result) {
+                     $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                 } else {
+                     echo "Error: " . mysqli_error($conn);
+                 }
+                       
+             foreach ($questions as $index => $question): ?>
+   <div class="flex">
+       <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
+       <input type="text" name="question[<?= $question['id'] ?>]" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="<?= $question['question'] ?>">
+   </div>
+<?php endforeach; ?>
+
+
+
+<!-- TITLE 3 -->
+
+<h1 class = "text-sm font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">III. TEACHING OF INDIVIDUAL LEARNING</h1>
+             <?php
+                 $sql = "SELECT * FROM froms_tbl WHERE type = 'SELF' AND title = 'TITLE 3'";
+                 $result = mysqli_query($conn, $sql);
+             
+                 if ($result) {
+                     $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                 } else {
+                     echo "Error: " . mysqli_error($conn);
+                 }
+                       
+             foreach ($questions as $index => $question): ?>
+   <div class="flex">
+       <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
+       <input type="text" name="question[<?= $question['id'] ?>]" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="<?= $question['question'] ?>">
+   </div>
+<?php endforeach; ?>
+
+
+
+<!-- TITLE 4 -->
+
+<h1 class = "text-sm font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">IV. MANAGEMENT LEARNING</h1>
+             <?php
+                 $sql = "SELECT * FROM froms_tbl WHERE type = 'SELF' AND title = 'TITLE 4'";
+                 $result = mysqli_query($conn, $sql);
+             
+                 if ($result) {
+                     $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                 } else {
+                     echo "Error: " . mysqli_error($conn);
+                 }
+                       
+             foreach ($questions as $index => $question): ?>
+   <div class="flex">
+       <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
+       <input type="text" name="question[<?= $question['id'] ?>]" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="<?= $question['question'] ?>">
+   </div>
+<?php endforeach; ?>
 
            
 
