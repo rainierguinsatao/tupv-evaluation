@@ -26,14 +26,7 @@
         }
     }
 
-    $sql = "SELECT * FROM froms_tbl";
-    $result = mysqli_query($conn, $sql);
 
-    if ($result) {
-        $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    } else {
-        echo "Error: " . mysqli_error($conn);
-    }
 ?>
 
 <div class="p-4 sm:ml-64">
@@ -64,11 +57,22 @@
      <div class="w-full-screen bg-white rounded-lg shadow dark:border md:mt-0 xl:p-0 dark:bg-gray-800 dark:border-gray-700">
          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
              <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                 Evaluation Form Editor
+             <span class = "text-red-700">G</span>enral Evaluation Form Editor
              </h1>
              <form class="space-y-4 md:space-y-6" action="#" method = "post">
-     
-             <?php foreach ($questions as $index => $question): ?>
+
+             <?php
+                 $sql = "SELECT * FROM froms_tbl";
+                 $result = mysqli_query($conn, $sql);
+             
+                 if ($result) {
+                     $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                 } else {
+                     echo "Error: " . mysqli_error($conn);
+                 }
+                 
+                 
+             foreach ($questions as $index => $question): ?>
    <div class="flex">
        <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
        <input type="text" name="question[<?= $question['id'] ?>]" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="<?= $question['question'] ?>">
@@ -95,38 +99,24 @@
     <!-- SELF FORM TAB ----------------- -->
 
 
-
-    <?php
-
-
-    $sql = "SELECT * FROM selfform_tbl";
-    $result = mysqli_query($conn, $sql);
-
-    if ($result) {
-        $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    } else {
-        echo "Error: " . mysqli_error($conn);
-    }
-?>
-
     <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
     <section class="bg-gray-50 dark:bg-gray-900">
      
      <div class="w-full-screen bg-white rounded-lg shadow dark:border md:mt-0 xl:p-0 dark:bg-gray-800 dark:border-gray-700">
          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
              <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                 Self Evaluation Form Editor
+                <span class = "text-red-700">S</span>elf Evaluation Form Editor
              </h1>
              <form class="space-y-4 md:space-y-6" action="./update_selfform.php" method="post">
 
-     
-             <?php foreach ($questions as $index => $question): ?>
-            <div class="flex">
-                <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
-                <input type="text" name="question[<?= $question['id'] ?>]" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="<?= $question['question'] ?>">
-            </div>
-            <?php endforeach; ?>
+                    <?php foreach ($questions as $index => $question): ?>
+        <div class="flex">
+            <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
+            <input type="text" name="question[<?= $question['id'] ?>]" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="<?= $question['question'] ?>">
+        </div>
+        <?php endforeach; ?>
 
+           
 
 
                <div class = "m-6">
