@@ -15,7 +15,7 @@ if (isset($_POST['loginfacultybtn'])) {
             $_SESSION['email'] = $row['email'];
             $_SESSION['type'] = $row['type'];
         }
-        header('location:../_faculty/faculty.php');
+        header('location:../_forms/faculty.php');
     } else {
         header('location:../_faculty/')
     ?>
