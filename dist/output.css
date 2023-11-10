@@ -1096,6 +1096,18 @@ input:checked + .toggle-bg {
   top: 0px;
 }
 
+.end-2 {
+  inset-inline-end: 0.5rem;
+}
+
+.end-2\.5 {
+  inset-inline-end: 0.625rem;
+}
+
+.top-3 {
+  top: 0.75rem;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -1227,6 +1239,22 @@ input:checked + .toggle-bg {
   margin-top: 32px;
 }
 
+.ml-4 {
+  margin-left: 1rem;
+}
+
+.mb-5 {
+  margin-bottom: 1.25rem;
+}
+
+.me-2 {
+  margin-inline-end: 0.5rem;
+}
+
+.ms-auto {
+  margin-inline-start: auto;
+}
+
 .block {
   display: block;
 }
@@ -1299,6 +1327,18 @@ input:checked + .toggle-bg {
   height: 100vh;
 }
 
+.h-12 {
+  height: 3rem;
+}
+
+.h-\[calc\(100\%-1rem\)\] {
+  height: calc(100% - 1rem);
+}
+
+.max-h-full {
+  max-height: 100%;
+}
+
 .w-1\/2 {
   width: 50%;
 }
@@ -1353,6 +1393,14 @@ input:checked + .toggle-bg {
 
 .w-full {
   width: 100%;
+}
+
+.w-12 {
+  width: 3rem;
+}
+
+.w-8 {
+  width: 2rem;
 }
 
 .max-w-2xl {
@@ -1517,6 +1565,10 @@ input:checked + .toggle-bg {
   overflow-y: auto;
 }
 
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
 .whitespace-nowrap {
   white-space: nowrap;
 }
@@ -1669,6 +1721,15 @@ input:checked + .toggle-bg {
   background-color: rgb(255 255 255 / 0.5);
 }
 
+.bg-red-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(224 36 36 / var(--tw-bg-opacity));
+}
+
+.bg-transparent {
+  background-color: transparent;
+}
+
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
 }
@@ -1819,6 +1880,10 @@ input:checked + .toggle-bg {
   padding-top: 5rem;
 }
 
+.text-left {
+  text-align: left;
+}
+
 .text-center {
   text-align: center;
 }
@@ -1957,6 +2022,11 @@ input:checked + .toggle-bg {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity));
+}
+
 .opacity-0 {
   opacity: 0;
 }
@@ -2063,6 +2133,11 @@ input:checked + .toggle-bg {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-gray-200:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
 .hover\:text-\[\#C51E3A\]:hover {
   --tw-text-opacity: 1;
   color: rgb(197 30 58 / var(--tw-text-opacity));
@@ -2086,6 +2161,10 @@ input:checked + .toggle-bg {
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.focus\:z-10:focus {
+  z-index: 10;
 }
 
 .focus\:border-blue-500:focus {
@@ -2125,6 +2204,11 @@ input:checked + .toggle-bg {
   --tw-ring-color: rgb(229 231 235 / var(--tw-ring-opacity));
 }
 
+.focus\:ring-red-300:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(248 180 180 / var(--tw-ring-opacity));
+}
+
 .group:hover .group-hover\:text-gray-900 {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
@@ -2151,6 +2235,11 @@ input:checked + .toggle-bg {
 
 :is(.dark .dark\:border-transparent) {
   border-color: transparent;
+}
+
+:is(.dark .dark\:border-gray-500) {
+  --tw-border-opacity: 1;
+  border-color: rgb(107 114 128 / var(--tw-border-opacity));
 }
 
 :is(.dark .dark\:bg-blue-600) {
@@ -2211,6 +2300,16 @@ input:checked + .toggle-bg {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+:is(.dark .dark\:text-gray-200) {
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity));
+}
+
+:is(.dark .dark\:text-gray-300) {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity));
+}
+
 :is(.dark .dark\:hover\:bg-blue-700:hover) {
   --tw-bg-opacity: 1;
   background-color: rgb(26 86 219 / var(--tw-bg-opacity));
@@ -2251,6 +2350,16 @@ input:checked + .toggle-bg {
   --tw-ring-color: rgb(75 85 99 / var(--tw-ring-opacity));
 }
 
+:is(.dark .dark\:focus\:ring-blue-800:focus) {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(30 66 159 / var(--tw-ring-opacity));
+}
+
+:is(.dark .dark\:focus\:ring-red-800:focus) {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(155 28 28 / var(--tw-ring-opacity));
+}
+
 :is(.dark .group:hover .dark\:group-hover\:text-white) {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -2281,6 +2390,10 @@ input:checked + .toggle-bg {
 }
 
 @media (min-width: 768px) {
+  .md\:inset-0 {
+    inset: 0px;
+  }
+
   .md\:mt-0 {
     margin-top: 0px;
   }
@@ -2317,6 +2430,10 @@ input:checked + .toggle-bg {
 
   .md\:p-\[0px\] {
     padding: 0px;
+  }
+
+  .md\:p-5 {
+    padding: 1.25rem;
   }
 
   .md\:py-24 {
