@@ -20,7 +20,7 @@ foreach ($accounts as $index => $acc):
 ?>
 
 <input type="hidden" name="full_name" value="<?= $acc['first_name'] . ' ' . $acc['last_name'] . ' ' . $acc['mi'] ?>">
-<input type="hidden" name = "course" value = "<?= $acc['course'] ?> ">
+<input type="hidden" name = "course" value = "<?= $acc['course'] ?>">
 
 
 
