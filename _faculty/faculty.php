@@ -11,7 +11,7 @@
     <link href="../dist/output.css" rel="stylesheet">
     <title>TUP-V Evaluation | Faculty</title>
 </head>
-<body class = "bg-[#C51E3A]">
+<body class = "bg-red-700">
 <nav class="bg-white border-gray-200 dark:bg-gray-900">
   <div class="container mx-auto flex flex-wrap items-center justify-between py-4">
     <img src="../images/LOGO.png" class="h-6 ml-4" alt=" Logo" />
@@ -94,15 +94,31 @@
         
 
 
-        <h1 class="text-2xl font-bold">Hi, <?= $acc['first_name'] ?> <?= $acc['mi'] ?> <?= $acc['last_name'] ?></h1>
-        <h1 id="user_course" class="text-2xl font-bold"><?= $acc['course'] ?> </h1>
+        <h1 class="text-2xl font-bold hidden">Hi, <?= $acc['first_name'] ?> <?= $acc['mi'] ?> <?= $acc['last_name'] ?></h1>
+        <h1 id="user_course" class="text-2xl font-bold hidden"><?= $acc['course'] ?></h1>
        
         <h1 id="user_id" class="text-2xl font-bold hidden"><?= $_SESSION['id'] ?> </h1>
         <?php endforeach; ?>
     </div>
     <div class="w-[632px] mx-auto my-6">
+    <div class="p-6 bg-white border rounded-lg mb-4">
+            <div class="text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800 mb-2">
+                            <h1 class="font-semibold text-[#C51E3A] uppercase">information</h1>
+                            <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">When evaluating teachers, honestly acknowledge their strengths, citing specific examples that impressed you, and express constructive concerns or suggestions for improvement. Thank you for your cooperation.</p>
+                        </div>
+            </div>
+
+            <div class="p-6 bg-white border rounded-lg mb-4">
+            <div class="text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800 mb-2">
+                            <p class="mt-1 text-md font-normal text-gray-900 dark:text-gray-400"><span class = "text-gray-400 uppercase text-xs">Name:</span> <?= $acc['first_name'] ?> <?= $acc['mi'] ?> <?= $acc['last_name'] ?></p>
+
+                            <p class="mt-1 text-md font-normal text-gray-900 dark:text-gray-400"><span class = "text-gray-400 uppercase text-xs">DEPARTMENT|COURSE:</span> <?= $acc['course'] ?></p>
+                        </div>
+            </div>
+        
         <form method="post" action="./process.php" id="myForm">
             <div class="p-6 bg-white border rounded-lg mb-4">
+          
                 <label for="selectOption" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option:</label>
                 <select id="selectOption" name="selectOption" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" onchange="changeForm()" >
                     <option selected disabled hidden value="">Choose</option>
