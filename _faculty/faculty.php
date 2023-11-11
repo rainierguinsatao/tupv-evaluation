@@ -88,7 +88,7 @@
         <h1 class="text-2xl font-bold">Hi, <?= $acc['first_name'] ?> <?= $acc['mi'] ?> <?= $acc['last_name'] ?></h1>
         <h1 id="user_course" class="text-2xl font-bold"><?= $acc['course'] ?> </h1>
         <h1 id="user_id" class="text-2xl font-bold hidden"><?= $_SESSION['id'] ?> </h1>
-        <?php endforeach; ?>
+        
     </div>
     <div class="w-[632px] mx-auto my-6">
         <form method="post" action="process.php" id="myForm">
@@ -96,13 +96,13 @@
                 <label for="selectOption" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option:</label>
                 <select id="selectOption" name="selectOption" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" onchange="changeForm()" >
                     <option selected disabled hidden value="">Choose</option>
-                    <option value="Supervisor">Supervisor</option>
+                    <option class="<?php if($acc['faculty_type'] == 'supervisor') { echo 'hidden';}?>" value="Supervisor">Supervisor</option>
                     <option value="Peer to Peer">Peer to Peer</option>
                     <option value="Self">Self</option>
                     <!-- Add more options as needed -->
                 </select>
             </div>
-            
+            <?php endforeach; ?>
 
             <div id="formContainer" class="flex flex-col gap-4">
                 <!-- Form content will be dynamically inserted here -->
