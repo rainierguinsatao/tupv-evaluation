@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <img class="w-[70px]" src="../images/Technological_University_of_the_Philippines_Seal.svg.png" alt="tupv-logo">
     </nav>
     <main class="flex justify-center">
-        <div class="my-6 w-[632px] flex flex-col gap-4">
+        <div class="my-6 w-[632px] flex flex-col gap-4 mx-4">
             <div class="rounded-lg px-8 py-4 bg-white">
                 <h1 class="text-2xl font-medium">Evaluation Form</h1>
             </div>
