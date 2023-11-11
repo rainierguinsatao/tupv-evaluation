@@ -1,0 +1,113 @@
+
+                      <!-- TITLE 2 -->
+                      <div class="m-4">
+                <div class="max-w-1/2 p-6  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+
+                <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">II. Knowledge of Subject</h5>
+                <?php
+                $sql = "SELECT * FROM froms_tbl WHERE type = 'GENERAL' AND title = 'TITLE 2'";
+                $result = mysqli_query($conn, $sql);
+
+                if ($result) {
+                    $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                } else {
+                    echo "Error: " . mysqli_error($conn);
+                }
+
+                foreach ($questions as $index => $question): ?>
+                    <div class="flex items-center">
+                        <span class="m-2 text-gray-800"><?= ($index + 1) . "." ?></span>
+                        <p class="m-2 font-normal text-gray-900 dark:text-gray-400" name="question[<?= $question['id'] ?>]"><?= $question['question'] ?></p>
+                        
+                    </div>
+
+                    <div class="flex">
+                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                    <div class="text-center flex mx-auto">
+                        <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                        <br>
+                        <?= $i ?>
+                    </div>
+                <?php endfor; ?>
+            </div>
+
+                <?php endforeach ?>
+            </div>
+            </div>
+
+
+
+
+              <!-- TITLE 3 -->
+              <div class="m-4">
+                <div class="max-w-1/2 p-6  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+
+                <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">III. Teaching for independent learninig</h5>
+                <?php
+                $sql = "SELECT * FROM froms_tbl WHERE type = 'GENERAL' AND title = 'TITLE 3'";
+                $result = mysqli_query($conn, $sql);
+
+                if ($result) {
+                    $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                } else {
+                    echo "Error: " . mysqli_error($conn);
+                }
+
+                foreach ($questions as $index => $question): ?>
+                    <div class="flex items-center">
+                        <span class="m-2 text-gray-800"><?= ($index + 1) . "." ?></span>
+                        <p class="m-2 font-normal text-gray-900 dark:text-gray-400" name="question[<?= $question['id'] ?>]"><?= $question['question'] ?></p>
+                        
+                    </div>
+
+                    <div class="flex">
+                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                    <div class="text-center flex mx-auto">
+                        <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                        <br>
+                        <?= $i ?>
+                    </div>
+                <?php endfor; ?>
+            </div>
+
+                <?php endforeach ?>
+            </div>
+            </div>
+
+
+
+              <!-- TITLE 4 -->
+              <div class="m-4">
+                <div class="max-w-1/2 p-6  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+
+                <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">IV. Management of learninig</h5>
+                <?php
+                $sql = "SELECT * FROM froms_tbl WHERE type = 'GENERAL' AND title = 'TITLE 4'";
+                $result = mysqli_query($conn, $sql);
+
+                if ($result) {
+                    $questions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                } else {
+                    echo "Error: " . mysqli_error($conn);
+                }
+
+                foreach ($questions as $index => $question): ?>
+                    <div class="flex items-center">
+                        <span class="m-2 text-gray-800"><?= ($index + 1) . "." ?></span>
+                        <p class="m-2 font-normal text-gray-900 dark:text-gray-400" name="question[<?= $question['id'] ?>]"><?= $question['question'] ?></p>
+                        
+                    </div>
+
+                    <div class="flex">
+                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                    <div class="text-center flex mx-auto">
+                        <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                        <br>
+                        <?= $i ?>
+                    </div>
+                <?php endfor; ?>
+            </div>
+
+                <?php endforeach ?>
+            </div>
+            </div>
