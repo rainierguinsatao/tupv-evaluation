@@ -11,6 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $term = $_POST['term'];
     $schoolYear = $_POST['schoolyear'];
     $faculty = $_POST['faculty_to_eval'];
+    $comms = $_POST['comms'];
     $type = "STUDENT";
     
 
@@ -20,9 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $tits = $_POST['tits'][$qid];
 
      
-        $insertSql = "INSERT INTO rate_score_tbl (type, name, course, term, sy, qid, faculty, score, tits) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $insertSql = "INSERT INTO rate_score_tbl (type, name, course, term, sy, qid, faculty, score, tits, comms) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($insertSql);
-        $stmt->bind_param("sssssssis", $type, $name, $course, $term, $schoolYear, $qid, $faculty, $score, $tits);
+        $stmt->bind_param("sssssssiss", $type, $name, $course, $term, $schoolYear, $qid, $faculty, $score, $tits, $comms);
         $stmt->execute();
         $stmt->close();
     }
@@ -44,15 +45,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </nav>
     <main class="flex justify-center">
         <div class="my-6 w-[632px] flex flex-col gap-4">
-            <div class="rounded-lg px-8 py-4 bg-white">
-                <h1 class="text-2xl font-medium">Evaluation Form</h1>
+            <div class="rounded-lg flex px-8 py-4 bg-white">
+                <div class = " mx-auto m3">
+            <img class="w-64" src="../images/LOGO.png" alt="tupv-logo">
+            </div>
             </div>
             <form action="" method="post">
                 <div class="flex flex-col gap-4">
                     <div class="flex flex-col gap-4 rounded-lg p-8 bg-white">
                         <div class="text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800 mb-2">
                             <h1 class="font-semibold text-[#C51E3A] uppercase">information</h1>
-                            <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum ab voluptatibus vero consequuntur sed qui vel? Illo error numquam, reprehenderit, dignissimos minus officiis voluptatem aspernatur facilis omnis, hic repellat nostrum.</p>
+                            <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">When evaluating teachers, honestly acknowledge their strengths, citing specific examples that impressed you, and express constructive concerns or suggestions for improvement. Thank you for your cooperation.</p>
                         </div>
                         <div>
                             <label for="name-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name <span class="text-[#C51E3A]">*</span></label>
@@ -115,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="flex flex-col gap-4 rounded-lg p-8 bg-white">
                         <h1 class="text-2xl font-semibold">Form</h1>
                         <div>
-                            <h5 class="mb-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">I. Commitment</h5>
+                            <h5 class="mb-2 mt-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">I. Commitment</h5>
                             <?php
                                 $sql = "SELECT * FROM froms_tbl WHERE type = 'GENERAL' AND title = 'TITLE 1'";
                                 $result = mysqli_query($conn, $sql);
@@ -149,7 +152,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php endforeach ?>
                         </div>
                         <div>
-                            <h5 class="mb-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">II. Knowledge of Subject</h5>
+                            <h5 class="mb-2 mt-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">II. Knowledge of Subject</h5>
                             <?php
                                 $sql = "SELECT * FROM froms_tbl WHERE type = 'GENERAL' AND title = 'TITLE 2'";
                                 $result = mysqli_query($conn, $sql);
@@ -184,7 +187,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php endforeach ?>
                         </div>
                         <div>
-                            <h5 class="mb-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">III. Teaching for independent learninig</h5>
+                            <h5 class="mb-2 mt-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">III. Teaching for independent learninig</h5>
                             <?php
                                 $sql = "SELECT * FROM froms_tbl WHERE type = 'GENERAL' AND title = 'TITLE 3'";
                                 $result = mysqli_query($conn, $sql);
@@ -218,7 +221,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php endforeach ?>
                         </div>
                         <div>
-                            <h5 class="mb-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">IV. Management of learninig</h5>
+                            <h5 class="mb-2 mt-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">IV. Management of learninig</h5>
                             <?php
                                 $sql = "SELECT * FROM froms_tbl WHERE type = 'GENERAL' AND title = 'TITLE 4'";
                                 $result = mysqli_query($conn, $sql);
@@ -252,6 +255,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php endforeach ?>
                         </div>
                     </div>
+
+                    <div class="rounded-lg flex px-8 py-4 bg-white">
+                <div class = " mx-auto w-full">
+                <div class="flex justify-between items-center mb-2">
+            <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Comment (optional):</h2>
+        </div>
+                <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+           
+            <textarea id="comment" rows="6"
+                name = "comms" class="px-0 w-full text-sm text-gray-900 border-0  dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+                placeholder="Write a comment..." required></textarea>
+        </div>  
+            </div>
+            </div>
                     <div class="flex">
                         <div class="ml-auto">
                             <button onclick="submitForm()" class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400">
