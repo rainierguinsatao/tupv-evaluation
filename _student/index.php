@@ -13,6 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $faculty = $_POST['faculty_to_eval'];
     $comms = $_POST['comms'];
     $type = "STUDENT";
+    $ftype = "student";
     
 
     // Loop through the submitted scores
@@ -21,9 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $tits = $_POST['tits'][$qid];
 
      
-        $insertSql = "INSERT INTO rate_score_tbl (type, name, course, term, sy, qid, faculty, score, tits, comms) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $insertSql = "INSERT INTO rate_score_tbl (type, name, kind, course, term, sy, qid, faculty, score, tits, comms) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($insertSql);
-        $stmt->bind_param("sssssssiss", $type, $name, $course, $term, $schoolYear, $qid, $faculty, $score, $tits, $comms);
+        $stmt->bind_param("ssssssssiss", $type, $name, $ftype, $course, $term, $schoolYear, $qid, $faculty, $score, $tits, $comms);
         $stmt->execute();
         $stmt->close();
     }

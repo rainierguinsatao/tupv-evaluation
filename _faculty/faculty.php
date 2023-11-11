@@ -96,6 +96,7 @@
 
         <h1 class="text-2xl font-bold hidden">Hi, <?= $acc['first_name'] ?> <?= $acc['mi'] ?> <?= $acc['last_name'] ?></h1>
         <h1 id="user_course" class="text-2xl font-bold hidden"><?= $acc['course'] ?></h1>
+        <h1 id="ftype" class="text-2xl font-bold hidden"><?= $acc['faculty_type'] ?></h1>
        
         <h1 id="user_id" class="text-2xl font-bold hidden"><?= $_SESSION['id'] ?> </h1>
         <?php endforeach; ?>
