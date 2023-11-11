@@ -1,12 +1,34 @@
 <?php
 include "../db/conn.php";
+
 $selectedOption = $_GET['option'];
 $usercourse = $_GET['course'];
 $userid = $_GET['id'];
-// Query your database or generate form content based on $selectedOption
-// For example:
+
+
+
+$sql = "SELECT * FROM accounts WHERE id = '$userid'";
+$stmt = $conn->prepare($sql);
+$result = mysqli_query($conn, $sql);
+
+if ($result) {
+    $accounts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+} else {
+    echo "Error: " . mysqli_error($conn);
+}
+foreach ($accounts as $index => $acc):
+?>
+
+<input type="hidden" name="full_name" value="<?= $acc['first_name'] . ' ' . $acc['last_name'] . ' ' . $acc['mi'] ?>">
+<input type="hidden" name = "course" value = "<?= $acc['course'] ?> ">
+
+
+
+<?php endforeach; ?>
+
+<?php
+
 if ($selectedOption == 'Supervisor') {
-  // Fetch form content from the database for form1
   ?> 
   Supervisor
     <div class="p-6 border rounded-lg">
@@ -37,6 +59,7 @@ if ($selectedOption == 'Supervisor') {
     </div>
     
     <div class="p-6 border rounded-lg">
+  
         <label for="faculty_to_eval" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name of Faculty to Evaluate <span class="text-[#C51E3A]">*</span></label>
         <select id="faculty_to_eval" name="faculty_to_eval" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
             <option selected disabled hidden value="">Choose</option>
@@ -306,7 +329,7 @@ if ($selectedOption == 'Supervisor') {
         <div>
             <h5 class="mb-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">II. Knowledge of Subject</h5>
             <?php
-                $sql = "SELECT * FROM froms_tbl WHERE type = 'SELF' AND title = 'TITLE 2'";
+                $sql = "SELECT * FROM froms_tbl WHERE type = 'GENERAL' AND title = 'TITLE 2'";
                 $result = mysqli_query($conn, $sql);
 
                 if ($result) {
@@ -341,7 +364,7 @@ if ($selectedOption == 'Supervisor') {
         <div>
             <h5 class="mb-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">III. Teaching for independent learninig</h5>
             <?php
-                $sql = "SELECT * FROM froms_tbl WHERE type = 'SELF' AND title = 'TITLE 3'";
+                $sql = "SELECT * FROM froms_tbl WHERE type = 'GENERAL' AND title = 'TITLE 3'";
                 $result = mysqli_query($conn, $sql);
 
                 if ($result) {
@@ -375,7 +398,7 @@ if ($selectedOption == 'Supervisor') {
         <div>
             <h5 class="mb-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">IV. Management of learninig</h5>
             <?php
-                $sql = "SELECT * FROM froms_tbl WHERE type = 'SELF' AND title = 'TITLE 4'";
+                $sql = "SELECT * FROM froms_tbl WHERE type = 'GENERAL' AND title = 'TITLE 4'";
                 $result = mysqli_query($conn, $sql);
 
                 if ($result) {

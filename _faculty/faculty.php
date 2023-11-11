@@ -11,15 +11,17 @@
     <link href="../dist/output.css" rel="stylesheet">
     <title>TUP-V Evaluation | Faculty</title>
 </head>
-<body>
+<body class = "bg-[#C51E3A]">
 <nav class="bg-white border-gray-200 dark:bg-gray-900">
   <div class="container mx-auto flex flex-wrap items-center justify-between py-4">
-    <img src="../images/LOGO.png" class="h-6" alt=" Logo" />
+    <img src="../images/LOGO.png" class="h-6 ml-4" alt=" Logo" />
     <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-        <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+        <div class="mr-4">
+        <button type="button" class="flex  text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
             <span class="sr-only">Open user menu</span>
-            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="">
+            <img class="w-8 h-8  rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="">
         </button>
+        </div>
         <!-- Dropdown menu -->
         <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
             <div class="px-4 py-3">
@@ -50,7 +52,7 @@
     </div>
 
 
-    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
+    <!-- <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user"> -->
         <!-- <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
                 <a href="#" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" aria-current="page">Home</a>
@@ -68,9 +70,12 @@
                 <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
             </li>
         </ul> -->
-    </div>
+    <!-- </div> -->
   </div>
 </nav>
+
+
+
 <main class="container mx-auto">
     <div>
         <?php
@@ -85,24 +90,29 @@
             }
             foreach ($accounts as $index => $acc):
         ?>
+        
+        
+
+
         <h1 class="text-2xl font-bold">Hi, <?= $acc['first_name'] ?> <?= $acc['mi'] ?> <?= $acc['last_name'] ?></h1>
         <h1 id="user_course" class="text-2xl font-bold"><?= $acc['course'] ?> </h1>
+       
         <h1 id="user_id" class="text-2xl font-bold hidden"><?= $_SESSION['id'] ?> </h1>
-        
+        <?php endforeach; ?>
     </div>
     <div class="w-[632px] mx-auto my-6">
-        <form method="post" action="process.php" id="myForm">
-            <div class="p-6 border rounded-lg mb-4">
+        <form method="post" action="./process.php" id="myForm">
+            <div class="p-6 bg-white border rounded-lg mb-4">
                 <label for="selectOption" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option:</label>
                 <select id="selectOption" name="selectOption" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" onchange="changeForm()" >
                     <option selected disabled hidden value="">Choose</option>
-                    <option class="<?php if($acc['faculty_type'] == 'supervisor') { echo 'hidden';}?>" value="Supervisor">Supervisor</option>
+                    <option value="Supervisor">Supervisor</option>
                     <option value="Peer to Peer">Peer to Peer</option>
                     <option value="Self">Self</option>
                     <!-- Add more options as needed -->
                 </select>
             </div>
-            <?php endforeach; ?>
+            
 
             <div id="formContainer" class="flex flex-col gap-4">
                 <!-- Form content will be dynamically inserted here -->
