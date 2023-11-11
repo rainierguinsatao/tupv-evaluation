@@ -1,4 +1,34 @@
-<?php include '../db/conn.php'; ?>
+<?php include '../db/conn.php';
+
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if the form is submitted
+
+    // Get the form data
+    $name = $_POST['name'];
+    $course = $_POST['course'];
+    $term = $_POST['term'];
+    $schoolYear = $_POST['schoolyear'];
+    $faculty = $_POST['faculty_to_eval'];
+    $type = "STUDENT";
+    
+
+    // Loop through the submitted scores
+    foreach ($_POST['question'] as $qid => $score) {
+     
+        $tits = $_POST['tits'][$qid];
+
+     
+        $insertSql = "INSERT INTO rate_score_tbl (type, name, course, term, sy, qid, faculty, score, tits) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($insertSql);
+        $stmt->bind_param("sssssssis", $type, $name, $course, $term, $schoolYear, $qid, $faculty, $score, $tits);
+        $stmt->execute();
+        $stmt->close();
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,7 +89,7 @@
                         </div>
                         <div>
                             <label for="schoolyear" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">S.Y.</label>
-                            <select id="schoolyear" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <select id="schoolyear" name = 'schoolyear' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <?php 
                                 $currentYear = date("Y");
                                 $endYear = $currentYear + 25; // Assuming you want options up to 75 years in the future
@@ -67,7 +97,7 @@
                                 for ($year = $currentYear; $year <= $endYear; $year++) {
                                     $nextYear = $year + 1;
                                     $schoolYear = $year . "-" . $nextYear;
-                                    echo "<option value='$schoolYear'>$schoolYear</option>";
+                                    echo "<option value='$schoolYear' name = 'schoolyear'>$schoolYear</option>";
                                 }
                             ?>
                             </select>
@@ -99,7 +129,9 @@
                                 foreach ($questions as $index => $question): 
                             ?>
                             <div class="flex">
+                            <input type="hidden" name="tits[<?= $question['id'] ?>]" value="<?= $question['qid'] ?>">
                                 <span class="m-2 text-gray-800"><?= ($index + 1) . "." ?></span>
+                                
                                 <p class="m-2 font-normal text-gray-900 dark:text-gray-400" name="question[<?= $question['id'] ?>]"><?= $question['question'] ?></p>
                             </div>
 
@@ -131,7 +163,10 @@
                                 foreach ($questions as $index => $question): 
                             ?>
                             <div class="flex">
+                            <input type="hidden" name="tits[<?= $question['id'] ?>]" value="<?= $question['qid'] ?>">
+   
                                 <span class="m-2 text-gray-800"><?= ($index + 1) . "." ?></span>
+                                
                                 <p class="m-2 font-normal text-gray-900 dark:text-gray-400" name="question[<?= $question['id'] ?>]"><?= $question['question'] ?></p>
                             </div>
 
@@ -163,7 +198,9 @@
                                 foreach ($questions as $index => $question): 
                             ?>
                             <div class="flex">
+                            <input type="hidden" name="tits[<?= $question['id'] ?>]" value="<?= $question['qid'] ?>">
                                 <span class="m-2 text-gray-800"><?= ($index + 1) . "." ?></span>
+                                 
                                 <p class="m-2 font-normal text-gray-900 dark:text-gray-400" name="question[<?= $question['id'] ?>]"><?= $question['question'] ?></p>
                             </div>
 
@@ -195,7 +232,9 @@
                                 foreach ($questions as $index => $question): 
                             ?>
                             <div class="flex">
+                            <input type="hidden" name="tits[<?= $question['id'] ?>]" value="<?= $question['qid'] ?>">
                                 <span class="m-2 text-gray-800"><?= ($index + 1) . "." ?></span>
+                                 
                                 <p class="m-2 font-normal text-gray-900 dark:text-gray-400" name="question[<?= $question['id'] ?>]"><?= $question['question'] ?></p>
                             </div>
 
