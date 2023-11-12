@@ -1,0 +1,11 @@
+@media print {
+    #print-btn {
+        display: none;
+    }
+    .print-hide {
+        display: none;
+    }
+    #tally-sheet {
+        display: block !important;
+    }
+}
