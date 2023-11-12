@@ -123,7 +123,7 @@
                 <label for="selectOption" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option:</label>
                 <select id="selectOption" name="selectOption" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" onchange="changeForm()" >
                     <option selected disabled hidden value="">Choose</option>
-                    <option value="Supervisor">Supervisor</option>
+                    <option class="<?php if($acc['faculty_type'] == 'supervisor') { echo 'hidden';}?>" value="Supervisor">Supervisor</option>
                     <option value="Peer to Peer">Peer to Peer</option>
                     <option value="Self">Self</option>
                     <!-- Add more options as needed -->
