@@ -15,7 +15,7 @@ if (isset($_POST['loginbtn'])) {
             $_SESSION['email'] = $row['email'];
             $_SESSION['type'] = $row['type'];
         }
-        header('location:../_admin/admin.php');
+        header('location:../_admin/evaluation.php');
     } else {
         header('location:../_admin/')
     ?>

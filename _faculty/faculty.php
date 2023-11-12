@@ -25,21 +25,12 @@
         <!-- Dropdown menu -->
         <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
             <div class="px-4 py-3">
-            <span class="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
-            <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
+            
             </div>
             <ul class="py-2" aria-labelledby="user-menu-button">
+        
             <li>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
-            </li>
-            <li>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
-            </li>
-            <li>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
-            </li>
-            <li>
-                <a href="../php/logout_faculty.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+            <a href="#" onclick="confirmLogout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
             </li>
             </ul>
         </div>
@@ -83,17 +74,21 @@
             $stmt = $conn->prepare($sql);
             $result = mysqli_query($conn, $sql);
 
+
+           
+
             if ($result) {
                 $accounts = mysqli_fetch_all($result, MYSQLI_ASSOC);
             } else {
                 echo "Error: " . mysqli_error($conn);
             }
             foreach ($accounts as $index => $acc):
+                $facultyType = $acc['faculty_type'];
         ?>
         
         
 
-
+                
         <h1 class="text-2xl font-bold hidden">Hi, <?= $acc['first_name'] ?> <?= $acc['mi'] ?> <?= $acc['last_name'] ?></h1>
         <h1 id="user_course" class="text-2xl font-bold hidden"><?= $acc['course'] ?></h1>
         <h1 id="ftype" class="text-2xl font-bold hidden"><?= $acc['faculty_type'] ?></h1>
@@ -101,8 +96,11 @@
         <h1 id="user_id" class="text-2xl font-bold hidden"><?= $_SESSION['id'] ?> </h1>
         <?php endforeach; ?>
     </div>
+    <?php   include '../_admin/alert.php';
+        ?>
     <div class="w-[632px] mx-auto my-6">
     <div class="p-6 bg-white border rounded-lg mb-4">
+      
             <div class="text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800 mb-2">
                             <h1 class="font-semibold text-[#C51E3A] uppercase">information</h1>
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">When evaluating teachers, honestly acknowledge their strengths, citing specific examples that impressed you, and express constructive concerns or suggestions for improvement. Thank you for your cooperation.</p>
@@ -114,6 +112,8 @@
                             <p class="mt-1 text-md font-normal text-gray-900 dark:text-gray-400"><span class = "text-gray-400 uppercase text-xs">Name:</span> <?= $acc['first_name'] ?> <?= $acc['mi'] ?> <?= $acc['last_name'] ?></p>
 
                             <p class="mt-1 text-md font-normal text-gray-900 dark:text-gray-400"><span class = "text-gray-400 uppercase text-xs">DEPARTMENT|COURSE:</span> <?= $acc['course'] ?></p>
+
+                            <p class="mt-1 text-md font-normal text-gray-900 dark:text-gray-400"><span class = "text-gray-400 uppercase text-xs">TYPE:</span> <?= $acc['faculty_type'] ?></p>
                         </div>
             </div>
         
@@ -122,10 +122,14 @@
           
                 <label for="selectOption" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option:</label>
                 <select id="selectOption" name="selectOption" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" onchange="changeForm()" >
-                    <option selected disabled hidden value="">Choose</option>
-                    <option value="Supervisor">Supervisor</option>
+                <?php if ($facultyType == 'supervisor'): ?>
                     <option value="Peer to Peer">Peer to Peer</option>
                     <option value="Self">Self</option>
+                <?php else: ?>
+                    <option value="Supervisor">Supervisor</option>
+                    <option value="Self">Self</option>
+                    <option value="Peer to Peer">Peer to Peer</option>
+                <?php endif; ?>
                     <!-- Add more options as needed -->
                 </select>
             </div>
@@ -155,6 +159,15 @@
     };
     xhr.open("GET", "../php/getForm.php?option=" + selectedOption + "&course=" + encodeURIComponent(courseText) + "&id=" + encodeURIComponent(courseid), true);
     xhr.send();
+    }
+
+
+
+    function confirmLogout() {
+        var confirmLogout = confirm("Are you sure you want to sign out?");
+        if (confirmLogout) {
+            window.location.href = "../php/logout_faculty.php";
+        }
     }
 </script>
 </body>
