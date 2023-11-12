@@ -1,4 +1,5 @@
 <?php include '../db/conn.php';
+session_start();
 
 
 
@@ -51,6 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <img class="w-64" src="../images/LOGO.png" alt="tupv-logo">
             </div>
             </div>
+            <?php   include '../_admin/alert.php';
+        ?>
             <form action="" method="post">
                 <div class="flex flex-col gap-4">
                     <div class="flex flex-col gap-4 rounded-lg p-8 bg-white">

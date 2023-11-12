@@ -72,7 +72,8 @@
      <div class="w-full-screen bg-white rounded-lg shadow dark:border md:mt-0 xl:p-0 dark:bg-gray-800 dark:border-gray-700">
          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
            
-             <form class="space-y-4 md:space-y-6" action="#" method = "post">
+         <form id="generalForm" class="space-y-4 md:space-y-6" action="#" method="post">
+
                 <h1 class = "text-sm font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">I. COMMITMENT</h1>
              <?php
                  $sql = "SELECT * FROM froms_tbl WHERE type = 'GENERAL' AND title = 'TITLE 1'";
@@ -160,7 +161,7 @@
 
 
                <div class = "m-6">
-                 <button type="submit" onclick="confirmAndUpdateForm()" class="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-md px-5 py-2.5 text-center ">Update Form</button>
+               <button type="submit" class="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-md px-5 py-2.5 text-center" onclick="return confirm('Are you sure you want to update the form?'); showAlert();">Update Form</button>
                  </div>
               
           
@@ -186,7 +187,7 @@
      <div class="w-full-screen bg-white rounded-lg shadow dark:border md:mt-0 xl:p-0 dark:bg-gray-800 dark:border-gray-700">
          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
             
-             <!-- <form class="space-y-4 md:space-y-6" action="./update_selfform.php" method="post"> -->
+    
              <h1 class = "text-sm font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">I. COMMITMENT</h1>
              <?php
                  $sql = "SELECT * FROM froms_tbl WHERE type = 'SELF' AND title = 'TITLE 1'";
@@ -276,7 +277,7 @@
 
 
                <div class = "m-6">
-               <button type="submit" onclick="confirmAndUpdateForm('selfform')" class="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-md px-5 py-2.5 text-center ">Update Self Form</button>
+               <button type="submit" class="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-md px-5 py-2.5 text-center" onclick="return confirm('Are you sure you want to update the form?'); showAlertS();">Update Self Form</button>
 
                  </div>
               
@@ -305,20 +306,16 @@
 <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
 
 <script>
-   function confirmAndUpdateForm(formType) {
-    // Use JavaScript confirm to ask for confirmation
-    var isConfirmed = confirm('Are you sure you want to update the ' + formType + ' form?');
+  function showAlert() {
+    alert('Genral Form updated successfully!');
+  
+  }
 
-    // If user confirms, submit the form
-    if (isConfirmed) {
-        document.forms[0].submit(); // Assuming this is the first form on the page
-        alert(formType.charAt(0).toUpperCase() + formType.slice(1) + ' Form updated.');
-    } else {
-        // If user cancels, you can show an alert or perform other actions
-        alert(formType.charAt(0).toUpperCase() + formType.slice(1) + ' Form update canceled.');
-    }
-}
 
+  function showAlertS() {
+    alert('Self Form updated successfully!');
+  
+  }
 </script>
 </body>
 </html>

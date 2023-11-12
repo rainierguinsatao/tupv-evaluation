@@ -5,15 +5,20 @@ include '../db/conn.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Loop through each question and update it in the database
     foreach ($_POST['question'] as $id => $question) {
-        $sql = "UPDATE selfform_tbl SET question='$question' WHERE id=$id";
-        if (!mysqli_query($conn, $sql)) {
-            echo "Error: " . mysqli_error($conn);
+        // Use a prepared statement to handle special characters
+        $stmt = $conn->prepare("UPDATE froms_tbl SET question=? WHERE id=?");
+        
+        // Bind parameters
+        $stmt->bind_param("si", $question, $id);
+        
+        // Execute the statement
+        if (!$stmt->execute()) {
+            echo "Error updating record: " . $stmt->error;
         }
-    }
 
-    // Redirect back to the page where the form is displayed
-    header("Location: your_page_with_forms.php");
-    exit();
+        // Close the statement
+        $stmt->close();
+    }
 } else {
     // If the request method is not POST, handle it accordingly (optional)
     echo "Invalid request method.";

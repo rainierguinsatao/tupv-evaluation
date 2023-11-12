@@ -22,10 +22,7 @@
       <div class="relative lg:border-none border border-gray-200 shadow-lg lg:shadow-none rounded-md w-full max-w-sm p-[20px] md:p-[0px] md:max-w-md bg-white flex flex-col">
           <div class="w-full py-[32px] flex flex-col items-center">
               <img class="w-[110px] mb-[24px]" src="../images/Technological_University_of_the_Philippines_Seal.svg.png" alt="tupv-logo">
-              
-              <?php 
-            include "../_admin/alert.php";
-            ?>
+
               <h3 class="font-bold text-[24px] text-[#C51E3A] mb-[24px]">FACULTY LOGIN</h3>
               <form action="../php/login_faculty.php" method="post" class="w-[70%]">
                 <div class="w-full">
@@ -56,56 +53,6 @@
 
 
 
-<?php
-if (isset($_SESSION['showModal']) && $_SESSION['showModal']) {
-    ?>
-    <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                                Evaluation is closed
-                            </h3>
-                            <div class="mt-2">
-                                <p class="text-sm text-gray-500">
-                                    The evaluation is currently closed. Please check back later.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
-                        Close
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-        $(document).ready(function() {
-            $(".bg-red-600").click(function() {
-                $(".fixed").hide();
-            });
-        });
-    </script>
-    <?php
-    $_SESSION['showModal'] = false;
-}
-
-if (isset($_SESSION['showAlert']) && $_SESSION['showAlert']) {
-    ?>
-    <div class="alert alert-danger" role="alert">
-        Invalid email or password. Please try again.
-    </div>
-    <?php
-    $_SESSION['showAlert'] = false;
-}
-?>
 
 
 <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>

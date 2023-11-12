@@ -33,4 +33,36 @@ if (isset($_POST['loginfacultybtn'])) {
         header('location:../_faculty/');
     }
 }
+
+
+
+
+
+
+
+
+if (isset($_POST['loginstud'])) {
+
+    $sql = "SELECT * FROM accounts";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $switchValue = $row['switch'];
+            if ($switchValue == 1) {
+                $_SESSION['alertOff'] = $_SESSION['alertOff'] = "Welcome Student, Ready to evaluate?";
+                $_SESSION['alertOffColor'] = "blue";
+                header('location:../_student/index.php');
+            } else {
+         
+                header('location:../_student/offpage.php');
+            }
+        }
+    } else {
+
+        header('location:../_student/');
+    }
+}
 ?>
+
+
