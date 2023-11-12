@@ -100,11 +100,23 @@ include './adminheader.php';
                         $scores = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         // Filter the results based on the 'type' column
                         $filterstudent = array_filter($scores, function($score) {
-                            return $score['type'] == 'STUDENT';
+                            return $score['kind'] == 'student';
                         });
+
                         $filterpeer2peer = array_filter($scores, function($score) {
-                            return $score['type'] == 'Peer to Peer';
+                            return $score['kind'] == 'faculty';
                         });
+
+                        $filtersupervisor = array_filter($scores, function($score) {
+                            return $score['kind'] == 'supervisor';
+                        });
+
+                        $filterself = array_filter($scores, function($score) use ($faculty_to_eval) {
+                            return $score['name'] == $faculty_to_eval;
+                        });
+                        
+
+                        
             ?>                        
                 <header class="mb-6 flex flex-col gap-4">
                     <div class="flex flex-col items-center text-center">
@@ -196,6 +208,7 @@ include './adminheader.php';
                                 // Initialize variables for average calculation
                                 $sumAve = 0;
                                 $countAve = 0;
+                                $averageAve = 0;
                                 // Now $filterstudent contains only the rows where 'type' is 'STUDENT'
                                 foreach ($filterstudent as $index => $scoreAve) {
                                     if ($scoreAve['tits'] == 'TG1') {
@@ -252,6 +265,7 @@ include './adminheader.php';
                                 // Initialize variables for average calculation
                                 $sumAve2 = 0;
                                 $countAve2 = 0;
+                                $averageAve2 = 0;
                                 // Now $filterstudent contains only the rows where 'type' is 'STUDENT'
                                 foreach ($filterstudent as $index => $scoreAve) {
                                     if ($scoreAve['tits'] == 'TG2') {
@@ -305,6 +319,7 @@ include './adminheader.php';
                                 // Initialize variables for average calculation
                                 $sumAve3 = 0;
                                 $countAve3 = 0;
+                                $averageAve3 = 0;
                                 // Now $filterstudent contains only the rows where 'type' is 'STUDENT'
                                 foreach ($filterstudent as $index => $scoreAve) {
                                     if ($scoreAve['tits'] == 'TG3') {
@@ -358,6 +373,7 @@ include './adminheader.php';
                                 // Initialize variables for average calculation
                                 $sumAve4 = 0;
                                 $countAve4 = 0;
+                                $averageAve4 = 0;
                                 // Now $filterstudent contains only the rows where 'type' is 'STUDENT'
                                 foreach ($filterstudent as $index => $scoreAve) {
                                     if ($scoreAve['tits'] == 'TG4') {
@@ -470,6 +486,7 @@ include './adminheader.php';
                                 // Initialize variables for average calculation
                                 $sumAvep2p = 0;
                                 $countAvep2p = 0;
+                                $averageAvep2p = 0;
                                 // Now $filterpeer2peer contains only the rows where 'type' is 'peer2peer'
                                 foreach ($filterpeer2peer as $index => $scoreAve) {
                                     if ($scoreAve['tits'] == 'TG1') {
@@ -523,6 +540,7 @@ include './adminheader.php';
                                 // Initialize variables for average calculation
                                 $sumAvep2p2 = 0;
                                 $countAvep2p2 = 0;
+                                $averageAvep2p2 = 0;
                                 // Now $filterpeer2peer contains only the rows where 'type' is 'peer2peer'
                                 foreach ($filterpeer2peer as $index => $scoreAve) {
                                     if ($scoreAve['tits'] == 'TG2') {
@@ -576,6 +594,7 @@ include './adminheader.php';
                                 // Initialize variables for average calculation
                                 $sumAvep2p3 = 0;
                                 $countAvep2p3 = 0;
+                                $averageAvep2p3 = 0;
                                 // Now $filterpeer2peer contains only the rows where 'type' is 'peer2peer'
                                 foreach ($filterpeer2peer as $index => $scoreAve) {
                                     if ($scoreAve['tits'] == 'TG3') {
@@ -629,6 +648,7 @@ include './adminheader.php';
                                 // Initialize variables for average calculation
                                 $sumAvep2p4 = 0;
                                 $countAvep2p4 = 0;
+                                $averageAvep2p4 = 0;
                                 // Now $filterpeer2peer contains only the rows where 'type' is 'peer2peer'
                                 foreach ($filterpeer2peer as $index => $scoreAve) {
                                     if ($scoreAve['tits'] == 'TG4') {
@@ -733,11 +753,33 @@ include './adminheader.php';
                         </div>
                         <!-- AVERAGE -->
                         <div class="col-span-1">
-                            <h1 class="">4.0500</h1>
+                            <h1 class="">
+                            <?php 
+                                // Initialize variables for average calculation
+                                $sumAveSup = 0;
+                                $countAveSup = 0;
+                                $averageAveSup = 0;
+                                // Now $filterpeer2peer contains only the rows where 'type' is 'peer2peer'
+                                foreach ($filtersupervisor as $index => $scoreAve) {
+                                    if ($scoreAve['tits'] == 'TG1') {
+                                        // Accumulate the scoreTG1 for average calculation
+                                        $sumAveSup += $scoreAve['score'];
+                                        $countAveSup++;
+                                    }
+                                }
+                                // Calculate the average
+                                if ($countAveSup > 0) {
+                                    $averageAveSup = $sumAveSup / $countAveSup;
+                                    echo number_format($averageAveSup, 4);
+                                } else {
+                                    echo "N/A";
+                                }
+                            ?>
+                            </h1>
                         </div>
                         <!-- 2X AVERAGE -->
                         <div class="col-span-1">
-                            <h1 class="">8.1000</h1>
+                            <h1 class=""><?php echo number_format($averageAveSup * 2, 4)?></h1>
                         </div>
                         <!-- WEIGHT -->
                         <div class="col-span-1">
@@ -745,7 +787,7 @@ include './adminheader.php';
                         </div>
                         <!-- WEIGHT AVERAGE-->
                         <div class="col-span-1">
-                            <h1 class="">2.0250</h1>
+                            <h1 class=""><?php echo number_format(($averageAveSup * 2) * 0.25, 4)?></h1>
                         </div>
                         <!-- LEVEL WEIGHT-->
                         <div class="col-span-1">
@@ -765,11 +807,33 @@ include './adminheader.php';
                         </div>
                         <!-- AVERAGE -->
                         <div class="col-span-1">
-                            <h1 class="">3.8500</h1>
+                            <h1 class="">
+                            <?php 
+                                // Initialize variables for average calculation
+                                $sumAveSup2 = 0;
+                                $countAveSup2 = 0;
+                                $averageAveSup2 = 0;
+                                // Now $filterpeer2peer contains only the rows where 'type' is 'peer2peer'
+                                foreach ($filtersupervisor as $index => $scoreAve) {
+                                    if ($scoreAve['tits'] == 'TG2') {
+                                        // Accumulate the scoreTG1 for average calculation
+                                        $sumAveSup2 += $scoreAve['score'];
+                                        $countAveSup2++;
+                                    }
+                                }
+                                // Calculate the average
+                                if ($countAveSup2 > 0) {
+                                    $averageAveSup2 = $sumAveSup2 / $countAveSup2;
+                                    echo number_format($averageAveSup2, 4);
+                                } else {
+                                    echo "N/A";
+                                }
+                            ?>
+                            </h1>
                         </div>
                         <!-- 2X AVERAGE -->
                         <div class="col-span-1">
-                            <h1 class="">7.7000</h1>
+                            <h1 class=""><?php echo number_format($averageAveSup2 * 2, 4)?></h1>
                         </div>
                         <!-- WEIGHT -->
                         <div class="col-span-1">
@@ -777,7 +841,7 @@ include './adminheader.php';
                         </div>
                         <!-- WEIGHT AVERAGE-->
                         <div class="col-span-1">
-                            <h1 class="">1.9250</h1>
+                            <h1 class=""><?php echo number_format(($averageAveSup2 * 2) * 0.25, 4)?></h1>
                         </div>
                         <!-- LEVEL WEIGHT-->
                         <div class="col-span-1">
@@ -797,11 +861,33 @@ include './adminheader.php';
                         </div>
                         <!-- AVERAGE -->
                         <div class="col-span-1">
-                            <h1 class="">3.8500</h1>
+                            <h1 class="">
+                            <?php 
+                                // Initialize variables for average calculation
+                                $sumAveSup3 = 0;
+                                $countAveSup3 = 0;
+                                $averageAveSup3 = 0;
+                                // Now $filterpeer2peer contains only the rows where 'type' is 'peer2peer'
+                                foreach ($filtersupervisor as $index => $scoreAve) {
+                                    if ($scoreAve['tits'] == 'TG2') {
+                                        // Accumulate the scoreTG1 for average calculation
+                                        $sumAveSup3 += $scoreAve['score'];
+                                        $countAveSup3++;
+                                    }
+                                }
+                                // Calculate the average
+                                if ($countAveSup3 > 0) {
+                                    $averageAveSup3 = $sumAveSup3 / $countAveSup3;
+                                    echo number_format($averageAveSup3, 4);
+                                } else {
+                                    echo "N/A";
+                                }
+                            ?>
+                            </h1>
                         </div>
                         <!-- 2X AVERAGE -->
                         <div class="col-span-1">
-                            <h1 class="">7.7000</h1>
+                            <h1 class=""><?php echo number_format($averageAveSup3 * 2, 4)?></h1>
                         </div>
                         <!-- WEIGHT -->
                         <div class="col-span-1">
@@ -809,7 +895,7 @@ include './adminheader.php';
                         </div>
                         <!-- WEIGHT AVERAGE-->
                         <div class="col-span-1">
-                            <h1 class="">1.9250</h1>
+                            <h1 class=""><?php echo number_format(($averageAveSup3 * 2) * 0.25, 4)?></h1>
                         </div>
                         <!-- LEVEL WEIGHT-->
                         <div class="col-span-1">
@@ -829,11 +915,33 @@ include './adminheader.php';
                         </div>
                         <!-- AVERAGE -->
                         <div class="col-span-1">
-                            <h1 class="">3.8500</h1>
+                            <h1 class="">
+                            <?php 
+                                // Initialize variables for average calculation
+                                $sumAveSup4 = 0;
+                                $countAveSup4 = 0;
+                                $averageAveSup4 = 0;
+                                // Now $filterpeer2peer contains only the rows where 'type' is 'peer2peer'
+                                foreach ($filtersupervisor as $index => $scoreAve) {
+                                    if ($scoreAve['tits'] == 'TG2') {
+                                        // Accumulate the scoreTG1 for average calculation
+                                        $sumAveSup4 += $scoreAve['score'];
+                                        $countAveSup4++;
+                                    }
+                                }
+                                // Calculate the average
+                                if ($countAveSup4 > 0) {
+                                    $averageAveSup4 = $sumAveSup4 / $countAveSup4;
+                                    echo number_format($averageAveSup4, 4);
+                                } else {
+                                    echo "N/A";
+                                }
+                            ?>
+                            </h1>
                         </div>
                         <!-- 2X AVERAGE -->
                         <div class="col-span-1">
-                            <h1 class="">7.7000</h1>
+                            <h1 class=""><?php echo number_format($averageAveSup4 * 2, 4)?></h1>
                         </div>
                         <!-- WEIGHT -->
                         <div class="col-span-1">
@@ -841,7 +949,7 @@ include './adminheader.php';
                         </div>
                         <!-- WEIGHT AVERAGE-->
                         <div class="col-span-1">
-                            <h1 class="">1.9250</h1>
+                            <h1 class=""><?php echo number_format(($averageAveSup4 * 2) * 0.25, 4)?></h1>
                         </div>
                         <!-- LEVEL WEIGHT-->
                         <div class="col-span-1">
@@ -861,7 +969,13 @@ include './adminheader.php';
                         </div>
                         <!-- AVERAGE -->
                         <div class="col-span-1">
-                            <h1 class="">3.8500</h1>
+                            <h1 class="">
+                            <?php 
+                                $aveSup = $averageAveSup + $averageAveSup2 + $averageAveSup3 + $averageAveSup4;
+                                
+                                echo number_format($aveSup / 4, 4);
+                            ?>
+                            </h1>
                         </div>
                         <!-- 2X AVERAGE -->
                         <div class="col-span-1">
@@ -873,7 +987,13 @@ include './adminheader.php';
                         </div>
                         <!-- WEIGHT AVERAGE-->
                         <div class="col-span-1">
-                            <h1 class="">1.9250</h1>
+                            <h1 class="">
+                            <?php 
+                                $ave2Sup = (($averageAveSup * 2) * 0.25) + (($averageAveSup2 * 2) * 0.25) + (($averageAveSup3 * 2) * 0.25) + (($averageAveSup4 * 2) * 0.25) ;
+                                
+                                echo number_format($ave2Sup / 4, 4);
+                            ?>
+                            </h1>
                         </div>
                         <!-- LEVEL WEIGHT-->
                         <div class="col-span-1">
@@ -881,7 +1001,11 @@ include './adminheader.php';
                         </div>
                         <!-- LEVEL WEIGHT AVERAGE-->
                         <div class="col-span-1">
-                            <h1 class="">2.3681</h1>
+                            <h1 class="">
+                            <?php 
+                                echo number_format(($ave2Sup / 4 ) * 0.3, 4)
+                            ?>
+                            </h1>
                         </div>
                     </div>
                 </section>
@@ -901,11 +1025,33 @@ include './adminheader.php';
                         </div>
                         <!-- AVERAGE -->
                         <div class="col-span-1">
-                            <h1 class="">4.0500</h1>
+                            <h1 class="">
+                            <?php 
+                                // Initialize variables for average calculation
+                                $sumAveSelf = 0;
+                                $countAveSelf = 0;
+                                $averageAveSelf = 0;
+                                // Now $filterpeer2peer contains only the rows where 'type' is 'peer2peer'
+                                foreach ($filterself as $index => $scoreAve) {
+                                    if ($scoreAve['tits'] == 'TS1') {
+                                        // Accumulate the scoreTG1 for average calculation
+                                        $sumAveSelf += $scoreAve['score'];
+                                        $countAveSelf++;
+                                    }
+                                }
+                                // Calculate the average
+                                if ($countAveSelf > 0) {
+                                    $averageAveSelf = $sumAveSelf / $countAveSelf;
+                                    echo number_format($averageAveSelf, 4);
+                                } else {
+                                    echo "N/A";
+                                }
+                            ?>
+                            </h1>
                         </div>
                         <!-- 2X AVERAGE -->
                         <div class="col-span-1">
-                            <h1 class="">8.1000</h1>
+                            <h1 class=""><?php echo number_format($averageAveSelf * 2, 4)?></h1>
                         </div>
                         <!-- WEIGHT -->
                         <div class="col-span-1">
@@ -913,7 +1059,7 @@ include './adminheader.php';
                         </div>
                         <!-- WEIGHT AVERAGE-->
                         <div class="col-span-1">
-                            <h1 class="">2.0250</h1>
+                            <h1 class=""><?php echo number_format(($averageAveSelf * 2) * 0.25, 4)?></h1>
                         </div>
                         <!-- LEVEL WEIGHT-->
                         <div class="col-span-1">
@@ -933,11 +1079,33 @@ include './adminheader.php';
                         </div>
                         <!-- AVERAGE -->
                         <div class="col-span-1">
-                            <h1 class="">3.8500</h1>
+                            <h1 class="">
+                            <?php 
+                                // Initialize variables for average calculation
+                                $sumAveSelf2 = 0;
+                                $countAveSelf2 = 0;
+                                $averageAveSelf2 = 0;
+                                // Now $filterpeer2peer contains only the rows where 'type' is 'peer2peer'
+                                foreach ($filterself as $index => $scoreAve) {
+                                    if ($scoreAve['tits'] == 'TS2') {
+                                        // Accumulate the scoreTG1 for average calculation
+                                        $sumAveSelf2 += $scoreAve['score'];
+                                        $countAveSelf2++;
+                                    }
+                                }
+                                // Calculate the average
+                                if ($countAveSelf2 > 0) {
+                                    $averageAveSelf2 = $sumAveSelf2 / $countAveSelf2;
+                                    echo number_format($averageAveSelf2, 4);
+                                } else {
+                                    echo "N/A";
+                                }
+                            ?>
+                            </h1>
                         </div>
                         <!-- 2X AVERAGE -->
                         <div class="col-span-1">
-                            <h1 class="">7.7000</h1>
+                            <h1 class=""><?php echo number_format($averageAveSelf2 * 2, 4)?></h1>
                         </div>
                         <!-- WEIGHT -->
                         <div class="col-span-1">
@@ -945,7 +1113,7 @@ include './adminheader.php';
                         </div>
                         <!-- WEIGHT AVERAGE-->
                         <div class="col-span-1">
-                            <h1 class="">1.9250</h1>
+                            <h1 class=""><?php echo number_format(($averageAveSelf2 * 2) * 0.25, 4)?></h1>
                         </div>
                         <!-- LEVEL WEIGHT-->
                         <div class="col-span-1">
@@ -965,11 +1133,33 @@ include './adminheader.php';
                         </div>
                         <!-- AVERAGE -->
                         <div class="col-span-1">
-                            <h1 class="">3.8500</h1>
+                            <h1 class="">
+                            <?php 
+                                // Initialize variables for average calculation
+                                $sumAveSelf3 = 0;
+                                $countAveSelf3 = 0;
+                                $averageAveSelf3 = 0;
+                                // Now $filterpeer2peer contains only the rows where 'type' is 'peer2peer'
+                                foreach ($filterself as $index => $scoreAve) {
+                                    if ($scoreAve['tits'] == 'TS3') {
+                                        // Accumulate the scoreTG1 for average calculation
+                                        $sumAveSelf3 += $scoreAve['score'];
+                                        $countAveSelf3++;
+                                    }
+                                }
+                                // Calculate the average
+                                if ($countAveSelf3 > 0) {
+                                    $averageAveSelf3 = $sumAveSelf3 / $countAveSelf3;
+                                    echo number_format($averageAveSelf3, 4);
+                                } else {
+                                    echo "N/A";
+                                }
+                            ?>
+                            </h1>
                         </div>
                         <!-- 2X AVERAGE -->
                         <div class="col-span-1">
-                            <h1 class="">7.7000</h1>
+                            <h1 class=""><?php echo number_format($averageAveSelf3 * 2, 4)?></h1>
                         </div>
                         <!-- WEIGHT -->
                         <div class="col-span-1">
@@ -977,7 +1167,7 @@ include './adminheader.php';
                         </div>
                         <!-- WEIGHT AVERAGE-->
                         <div class="col-span-1">
-                            <h1 class="">1.9250</h1>
+                            <h1 class=""><?php echo number_format(($averageAveSelf3 * 2) * 0.25, 4)?></h1>
                         </div>
                         <!-- LEVEL WEIGHT-->
                         <div class="col-span-1">
@@ -997,11 +1187,33 @@ include './adminheader.php';
                         </div>
                         <!-- AVERAGE -->
                         <div class="col-span-1">
-                            <h1 class="">3.8500</h1>
+                            <h1 class="">
+                            <?php 
+                                // Initialize variables for average calculation
+                                $sumAveSelf4 = 0;
+                                $countAveSelf4 = 0;
+                                $averageAveSelf4 = 0;
+                                // Now $filterpeer2peer contains only the rows where 'type' is 'peer2peer'
+                                foreach ($filterself as $index => $scoreAve) {
+                                    if ($scoreAve['tits'] == 'TS4') {
+                                        // Accumulate the scoreTG1 for average calculation
+                                        $sumAveSelf4 += $scoreAve['score'];
+                                        $countAveSelf4++;
+                                    }
+                                }
+                                // Calculate the average
+                                if ($countAveSelf4 > 0) {
+                                    $averageAveSelf4 = $sumAveSelf4 / $countAveSelf4;
+                                    echo number_format($averageAveSelf4, 4);
+                                } else {
+                                    echo "N/A";
+                                }
+                            ?>
+                            </h1>
                         </div>
                         <!-- 2X AVERAGE -->
                         <div class="col-span-1">
-                            <h1 class="">7.7000</h1>
+                            <h1 class=""><?php echo number_format($averageAveSelf4 * 2, 4)?></h1>
                         </div>
                         <!-- WEIGHT -->
                         <div class="col-span-1">
@@ -1009,7 +1221,7 @@ include './adminheader.php';
                         </div>
                         <!-- WEIGHT AVERAGE-->
                         <div class="col-span-1">
-                            <h1 class="">1.9250</h1>
+                            <h1 class=""><?php echo number_format(($averageAveSelf4 * 2) * 0.25, 4)?></h1>
                         </div>
                         <!-- LEVEL WEIGHT-->
                         <div class="col-span-1">
@@ -1029,7 +1241,13 @@ include './adminheader.php';
                         </div>
                         <!-- AVERAGE -->
                         <div class="col-span-1">
-                            <h1 class="">3.8500</h1>
+                            <h1 class="">
+                            <?php 
+                                $aveSelf = $averageAveSelf + $averageAveSelf2 + $averageAveSelf3 + $averageAveSelf4;
+                                
+                                echo number_format($aveSelf / 4, 4);
+                            ?>
+                            </h1>
                         </div>
                         <!-- 2X AVERAGE -->
                         <div class="col-span-1">
@@ -1041,7 +1259,13 @@ include './adminheader.php';
                         </div>
                         <!-- WEIGHT AVERAGE-->
                         <div class="col-span-1">
-                            <h1 class="">1.9250</h1>
+                            <h1 class="">
+                            <?php 
+                                $ave2Self = (($averageAveSelf * 2) * 0.25) + (($averageAveSelf2 * 2) * 0.25) + (($averageAveSelf3 * 2) * 0.25) + (($averageAveSelf4 * 2) * 0.25) ;
+                                
+                                echo number_format($ave2Self / 4, 4);
+                            ?>
+                            </h1>
                         </div>
                         <!-- LEVEL WEIGHT-->
                         <div class="col-span-1">
@@ -1049,7 +1273,11 @@ include './adminheader.php';
                         </div>
                         <!-- LEVEL WEIGHT AVERAGE-->
                         <div class="col-span-1">
-                            <h1 class="">2.3681</h1>
+                            <h1 class="">
+                            <?php 
+                                echo number_format(($ave2Self / 4 ) * 0.3, 4)
+                            ?>
+                            </h1>
                         </div>
                     </div>
                 </section>
@@ -1064,19 +1292,46 @@ include './adminheader.php';
                             <div class="flex items-center gap-2">
                                 <h1>Rating:</h1>
                                 <div class="border-4 border-black px-4">
-                                    9.3648
+                                <?php 
+                                    
+                                    $rating = (($ave2 / 4 ) * 0.3) + (($ave2p2p / 4 ) * 0.3) + (($ave2Sup / 4 ) * 0.3) + (($ave2Self / 4 ) * 0.3);
+                                    echo number_format($rating, 4);
+
+                                ?>      
                                 </div>
                             </div>
                         </div>
                         
                         <!-- DESCRIPTIVE EQUIVALENT -->  
                         <div class="flex flex-col items-center gap-2">
+                        <?php
+                            function getDescriptiveEquivalent($numericRating) {
+                                switch (true) {
+                                    case $numericRating >= 9.3:
+                                        return "Outstanding (O)";
+                                    case $numericRating >= 7.5:
+                                        return "Very Satisfactory (VS)";
+                                    case $numericRating >= 4.7:
+                                        return "Satisfactory (S)";
+                                    case $numericRating >= 2.7:
+                                        return "Fair (F)";
+                                    case $numericRating >= 2.0:
+                                        return "Needs Improvement (NI)";
+                                    default:
+                                        return "Invalid Rating";
+                                }
+                            }
 
+                            // Example usage: // Replace this with the actual numeric rating
+                            $descriptiveEquivalent = getDescriptiveEquivalent($rating);
+
+                            
+                            ?>
 
                             <div class="flex items-center gap-2 font-bold">
                                 <h1>DESCRIPTIVE EQUIVALENT:</h1>
                                 <div class="border-4 border-black px-10">
-                                    VERY SATISFACTORY
+                                    <?= $descriptiveEquivalent; ?>
                                 </div>
                             </div>
 
