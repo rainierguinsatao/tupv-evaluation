@@ -30,34 +30,10 @@ include './adminheader.php';
                 <div class="p-6 border rounded-lg flex gap-4">
                     <div>
                         <label for="term" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Term <span class="text-[#C51E3A]">*</span></label>
-                        <select id="term" name="term" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                            <option selected disabled hidden value="">Choose Term</option>
-                            <option value="Prelim">Prelim</option>
-                            <option value="Midterm">Midterm</option>
-                            <option value="Endterm">Endterm</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="schoolyear" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">S.Y.</label>
-                        <select id="schoolyear" name ='schoolyear' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <?php 
-                            $currentYear = date("Y");
-                            $endYear = $currentYear + 25; // Assuming you want options up to 75 years in the future
-
-                            for ($year = $currentYear; $year <= $endYear; $year++) {
-                                $nextYear = $year + 1;
-                                $schoolYear = $year . "-" . $nextYear;
-                                echo "<option value='$schoolYear' name = 'schoolyear'>$schoolYear</option>";
-                            }
-                        ?>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="course" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course <span class="text-[#C51E3A]">*</span></label>
-                        <select id="course" name="course" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                            <option selected disabled hidden value="">Choose Course</option>
-                            <?php
-                                $sql = "SELECT * FROM courses_tbl";
+                        <select id="term" name="term" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                        <option selected disabled hidden value="">Choose Term</option>
+                        <?php
+                                $sql = "SELECT DISTINCT term FROM rate_score_tbl";
                                 $stmt = $conn->prepare($sql);
                                 $result = mysqli_query($conn, $sql);
 
@@ -68,14 +44,54 @@ include './adminheader.php';
                                 }
                                 foreach ($courses as $index => $course):
                             ?>
-                                <option value="<?= $course['dept'] ?> - <?= $course['courseName'] ?>"><?= $course['dept'] ?> - <?= $course['courseName'] ?></option>
+                        <option value="<?= $course['term'] ?>"><?= $course['term'] ?></option>
+                        <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="schoolyear" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">S.Y.</label>
+                        <select id="schoolyear" name ='schoolyear' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                        <option selected disabled hidden value="">Choose S.Y.</option>
+                        <?php
+                                $sql = "SELECT DISTINCT sy FROM rate_score_tbl";
+                                $stmt = $conn->prepare($sql);
+                                $result = mysqli_query($conn, $sql);
+
+                                if ($result) {
+                                    $courses = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                                } else {
+                                    echo "Error: " . mysqli_error($conn);
+                                }
+                                foreach ($courses as $index => $course):
+                            ?>
+                        <option value="<?= $course['sy'] ?>"><?= $course['sy'] ?></option>
+                        <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="course" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course <span class="text-[#C51E3A]">*</span></label>
+                        <select id="course" name="course" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                            <option selected disabled hidden value="">Choose Course</option>
+                            <?php
+                                $sql = "SELECT DISTINCT course FROM rate_score_tbl";
+                                $stmt = $conn->prepare($sql);
+                                $result = mysqli_query($conn, $sql);
+
+                                if ($result) {
+                                    $courses = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                                } else {
+                                    echo "Error: " . mysqli_error($conn);
+                                }
+                                foreach ($courses as $index => $course):
+                            ?>
+                                <option value="<?= $course['course'] ?>"><?= $course['course'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="">
                         <div>
                             <label for="faculty_to_eval" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Faculty to Evaluate <span class="text-[#C51E3A]">*</span></label>
-                            <select id="faculty_to_eval" name="faculty_to_eval" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" disabled>
+                            <select id="faculty_to_eval" name="faculty_to_eval" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" disabled required>
 
                             </select>
                         </div>

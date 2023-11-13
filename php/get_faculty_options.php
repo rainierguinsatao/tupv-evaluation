@@ -8,7 +8,7 @@ if (isset($_GET['course'])) {
     $selectedCourse = $_GET['course'];
 
     // Modify the SQL query to fetch faculty members based on the selected course
-    $sql = "SELECT * FROM accounts WHERE type = 'user' AND course = ? ORDER BY last_name ASC";
+    $sql = "SELECT DISTINCT faculty FROM rate_score_tbl WHERE course = ? ORDER BY faculty ASC";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('s', $selectedCourse);
     $stmt->execute();
@@ -19,10 +19,10 @@ if (isset($_GET['course'])) {
         $facultyOptions = array();
 
         while ($row = $result->fetch_assoc()) {
-            $middleInitial = !empty($row['mi']) ? $row['mi'] . '.' : '';
+            // $middleInitial = !empty($row['mi']) ? $row['mi'] . '.' : '';
             $facultyOptions[] = array(
-                'value' => $row['last_name'] . ', ' . $row['first_name'] . ' ' . $middleInitial,
-                'text' => $row['last_name'] . ', ' . $row['first_name'] . ' ' . $middleInitial
+                'value' => $row['faculty'],
+                'text' => $row['faculty']
             );
         }
 

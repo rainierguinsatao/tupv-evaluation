@@ -3,6 +3,7 @@ include "../db/conn.php";
 
 $selectedOption = $_GET['option'];
 $usercourse = $_GET['course'];
+$userdept = $_GET['dept'];
 $userid = $_GET['id'];
 
 
@@ -20,9 +21,8 @@ foreach ($accounts as $index => $acc):
 ?>
 
 <input type="hidden" name="full_name" value="<?= $acc['last_name'] . ', ' . $acc['first_name'] . ' ' . $acc['mi'] ?>.">
-<input type="hidden" name = "course" value = "<?= $acc['course'] ?>">
+<input type="hidden" name = "course" value = "<?= $acc['dept'] ?> - <?= $acc['course'] ?>">
 <input type="hidden" name = "ftype" value = "<?= $acc['faculty_type'] ?>">
-
 
 
 <?php endforeach; ?>
@@ -63,11 +63,13 @@ if ($selectedOption == 'Supervisor') {
         <label for="faculty_to_eval" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name of Faculty to Evaluate <span class="text-[#C51E3A]">*</span></label>
         <select id="faculty_to_eval" name="faculty_to_eval" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
             <option selected disabled hidden value="">Choose</option>
+
             <?php 
             // Modify the SQL query to fetch faculty members based on the selected course
             $sql = "SELECT * FROM accounts 
             WHERE faculty_type = 'supervisor' 
-              AND course = '$usercourse' 
+              AND course = '$userdept' 
+              AND dept = '$usercourse'
               AND id != '$userid'
             ORDER BY last_name ASC;
             ";
@@ -268,8 +270,9 @@ if ($selectedOption == 'Supervisor') {
             <?php 
             // Modify the SQL query to fetch faculty members based on the selected course
             $sql = "SELECT * FROM accounts 
-            WHERE type = 'user' 
-              AND course = '$usercourse' 
+            WHERE faculty_type = 'faculty' 
+              AND course = '$userdept' 
+              AND dept = '$usercourse'
               AND id != '$userid'
             ORDER BY last_name ASC;
             ";
@@ -435,7 +438,7 @@ if ($selectedOption == 'Supervisor') {
 } elseif ($selectedOption == 'Self') {
   // Fetch form content from the database for form2
   ?> 
-    <div class="p-6 border rounded-lg">
+    <div class="p-6 border bg-white rounded-lg">
         <div>
             <label for="term" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Term <span class="text-[#C51E3A]">*</span></label>
             <select id="term" name="term" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
@@ -461,7 +464,7 @@ if ($selectedOption == 'Supervisor') {
             </select>
         </div>
     </div>
-    <div class="p-6 border rounded-lg">
+    <div class="p-6 border bg-white rounded-lg">
         <h1 class="text-2xl font-semibold">Form</h1>
         <div>
             <h5 class="mb-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">I. Commitment</h5>

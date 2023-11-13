@@ -21,12 +21,20 @@
 <div class="p-4 sm:ml-64">
    <div class="p-4 mt-14">
 
+   
+
   <div class = "m-4 flex">
     <h1 class="text-gray-800 font-bold text-xl"><span class = "text-red-800">U</span>ser <span class = "text-red-800">S</span>ettings</h1>
   </div>
+  <div class="flex justify-end mb-6">
+            <div>
+                <a href="./add_user.php" type="button" class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2">Add User +</a>
+            </div>
+        </div>
 
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+
 
             
     <table id="myTable" class="w-full text-sm text-left p-3 rtl:text-right text-gray-500 dark:text-gray-400">
@@ -90,11 +98,11 @@
             </td>
 
             <td class="px-6 py-4">
-            <a href="#" class="font-medium text-red-700 dark:text-blue-500 "><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-          <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
-        </svg> 
-
-              </a>
+            <a href="javascript:(function(){ var result = confirm('Are you sure you want to delete: <?= $row['first_name']?><?= $row['last_name']?>of <?= $row['dept'] ?> - <?= $row['course'] ?>'); if(result) { window.location.href = '../php/settingsDelete.php?id=<?= $row['id'];?>&deluser=true'; } })();" class="font-medium text-red-700 dark:text-blue-500">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                    <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
+                </svg> 
+            </a>
             </td>
         </tr>
     <?php endwhile; ?>

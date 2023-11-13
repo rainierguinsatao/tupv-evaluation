@@ -90,10 +90,11 @@
 
                 
         <h1 class="text-2xl font-bold hidden">Hi, <?= $acc['first_name'] ?> <?= $acc['mi'] ?> <?= $acc['last_name'] ?></h1>
-        <h1 id="user_course" class="text-2xl font-bold hidden"><?= $acc['course'] ?></h1>
+        <h1 id="user_course" class="text-2xl font-bold hidden"><?= $acc['dept'] ?></h1>
+        <h1 id="user_dept" class="text-2xl font-bold hidden"><?= $acc['course'] ?></h1>
         <h1 id="ftype" class="text-2xl font-bold hidden"><?= $acc['faculty_type'] ?></h1>
        
-        <h1 id="user_id" class="text-2xl font-bold hidden"><?= $_SESSION['id'] ?> </h1>
+        <h1 id="user_id" class="text-2xl font-bold hidden"><?= $_SESSION['id'] ?></h1>
         <?php endforeach; ?>
     </div>
     <?php   include '../_admin/alert.php';
@@ -111,9 +112,9 @@
             <div class="text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800 mb-2">
                             <p class="mt-1 text-md font-normal text-gray-900 dark:text-gray-400"><span class = "text-gray-400 uppercase text-xs">Name:</span> <?= $acc['first_name'] ?> <?= $acc['mi'] ?> <?= $acc['last_name'] ?></p>
 
-                            <p class="mt-1 text-md font-normal text-gray-900 dark:text-gray-400"><span class = "text-gray-400 uppercase text-xs">DEPARTMENT|COURSE:</span> <?= $acc['course'] ?></p>
+                            <p class="mt-1 text-md font-normal text-gray-900 dark:text-gray-400"><span class = "text-gray-400 uppercase text-xs">DEPARTMENT|COURSE:</span> <?= $acc['dept'] ?> - <?= $acc['course'] ?></p>
 
-                            <p class="mt-1 text-md font-normal text-gray-900 dark:text-gray-400"><span class = "text-gray-400 uppercase text-xs">TYPE:</span> <?= $acc['faculty_type'] ?></p>
+                            <p class="mt-1 text-md font-normal text-gray-900 dark:text-gray-400 uppercase"><span class = "text-gray-400 uppercase text-xs">TYPE:</span> <?= $acc['faculty_type'] ?></p>
                         </div>
             </div>
         
@@ -122,6 +123,7 @@
           
                 <label for="selectOption" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option:</label>
                 <select id="selectOption" name="selectOption" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" onchange="changeForm()" >
+                    <option selected disabled hidden value="">Choose</option>
                 <?php if ($facultyType == 'supervisor'): ?>
                     <option value="Peer to Peer">Peer to Peer</option>
                     <option value="Self">Self</option>
@@ -148,7 +150,11 @@
     function changeForm() {
     var selectedOption = document.getElementById("selectOption").value;
     var formContainer = document.getElementById("formContainer");
+    
     var courseText = document.getElementById("user_course").innerText;
+    var deptText = document.getElementById("user_dept").innerText;
+    console.log(selectedOption);
+    console.log(formContainer);
     var courseid = document.getElementById("user_id").innerText;
     // Use AJAX to fetch form content from the server based on the selected option
     var xhr = new XMLHttpRequest();
@@ -157,13 +163,16 @@
         formContainer.innerHTML = xhr.responseText;
         }
     };
-    xhr.open("GET", "../php/getForm.php?option=" + selectedOption + "&course=" + encodeURIComponent(courseText) + "&id=" + encodeURIComponent(courseid), true);
+    xhr.open("GET", "../php/getForm.php?option=" + selectedOption + "&course=" + encodeURIComponent(courseText) + "&dept=" + encodeURIComponent(deptText) + "&id=" + encodeURIComponent(courseid), true);
     xhr.send();
     }
 
 
 
-    function confirmLogout() {
+
+</script>
+<script>
+        function confirmLogout() {
         var confirmLogout = confirm("Are you sure you want to sign out?");
         if (confirmLogout) {
             window.location.href = "../php/logout_faculty.php";
