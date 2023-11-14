@@ -20,9 +20,13 @@ if ($result) {
 foreach ($accounts as $index => $acc):
 ?>
 
+
+
+<input type="hidden" name = "nagrateid" value = "<?= $acc['id'] ?>">
 <input type="hidden" name="full_name" value="<?= $acc['last_name'] . ', ' . $acc['first_name'] . ' ' . $acc['mi'] ?>.">
 <input type="hidden" name = "course" value = "<?= $acc['dept'] ?> - <?= $acc['course'] ?>">
 <input type="hidden" name = "ftype" value = "<?= $acc['faculty_type'] ?>">
+
 
 
 <?php endforeach; ?>
@@ -84,6 +88,7 @@ if ($selectedOption == 'Supervisor') {
             ?>
             
             <option value="<?=$row['last_name'] . ', ' . $row['first_name'] . ' ' . $middleInitial?>"><?=$row['last_name'] . ', ' . $row['first_name'] . ' ' . $middleInitial?></option>
+             <input type="hidden" name="gnrateid" value="<?php echo $row['id'] ?>">
             <?php 
                 }
             }
@@ -230,7 +235,12 @@ if ($selectedOption == 'Supervisor') {
             <?php endforeach ?>
         </div>
     </div>
-    <button type="submit" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Submit</button>
+    <button type="submit" onclick="return confirm('Are you sure you want to submit SUPERVISOR evaluation?')" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Submit</button>
+
+
+    
+    
+    <button onclick="confirmLogout2()" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Cancel Submission</button>
   <?php
   
 } elseif ($selectedOption == 'Peer to Peer') {
@@ -287,6 +297,12 @@ if ($selectedOption == 'Supervisor') {
             ?>
             
             <option value="<?=$row['last_name'] . ', ' . $row['first_name'] . ' ' . $middleInitial?>"><?=$row['last_name'] . ', ' . $row['first_name'] . ' ' . $middleInitial?></option>
+
+            
+
+            <input type="hidden" name="gnrateid" value="<?php echo $row['id'] ?>">
+       
+
             <?php 
                 }
             }
@@ -433,8 +449,14 @@ if ($selectedOption == 'Supervisor') {
             <?php endforeach ?>
         </div>
     </div>
-    <button type="submit" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Submit</button>
+    <button type="submit" onclick="return confirm('Are you sure you want to submit PEER TO PEER evaluation?')" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Submit</button>
+    
+    <button onclick="confirmLogout2()" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Cancel Submission</button>
+   
   <?php
+
+
+
 } elseif ($selectedOption == 'Self') {
   // Fetch form content from the database for form2
   ?> 
@@ -604,7 +626,9 @@ if ($selectedOption == 'Supervisor') {
             <?php endforeach ?>
         </div>
     </div>
-    <button type="submit" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Submit</button>
+    <button type="submit" onclick="return confirm('Are you sure you want to submit SELF evaluation?')" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Submit</button>
+    
+    <button onclick="confirmLogout2()" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Cancel Submission</button>
   <?php
 }
 // Add more conditions as needed

@@ -105,6 +105,10 @@
             <div class="text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800 mb-2">
                             <h1 class="font-semibold text-[#C51E3A] uppercase">information</h1>
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">When evaluating teachers, honestly acknowledge their strengths, citing specific examples that impressed you, and express constructive concerns or suggestions for improvement. Thank you for your cooperation.</p>
+
+                            <h1 class="font-semibold text-[#C51E3A] text-sm italic uppercase mt-5">NOTE: Once you click finished evaluation, it is considered that you are done on evaluation on your; SUPERVISORS, PEERS, and your SELF. You can't login until the next evaluation.</h1>
+
+
                         </div>
             </div>
 
@@ -175,6 +179,13 @@
         function confirmLogout() {
         var confirmLogout = confirm("Are you sure you want to sign out?");
         if (confirmLogout) {
+            window.location.href = "../php/logout_faculty.php";
+        }
+    }
+
+    function confirmLogout2() {
+        var confirmLogout2 = confirm("Are you sure you want to Cancel you evaluation?");
+        if (confirmLogout2) {
             window.location.href = "../php/logout_faculty.php";
         }
     }
