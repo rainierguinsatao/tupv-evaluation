@@ -4,14 +4,16 @@
 // Include your database connection
 include('../db/conn.php');
 
-if (isset($_GET['course']) && isset($_GET['dept'])) {
+if (isset($_GET['course'])) {
     $selectedCourse = $_GET['course'];
-    $selectedDept = $_GET['dept'];
 
     // Modify the SQL query to fetch faculty members based on the selected course
-    $sql = "SELECT * FROM accounts WHERE course = ? AND dept = ? ORDER BY last_name ASC";
+    $sql = "SELECT DISTINCT rs.gnrateid, a.first_name, a.last_name, a.mi
+    FROM rate_score_tbl rs
+    JOIN accounts a ON rs.gnrateid = a.id WHERE rs.course = ?
+    ";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ss', $selectedCourse, $selectedDept);
+    $stmt->bind_param('s', $selectedCourse);
     $stmt->execute();
 
     $result = $stmt->get_result();
@@ -22,8 +24,8 @@ if (isset($_GET['course']) && isset($_GET['dept'])) {
         while ($row = $result->fetch_assoc()) {
             // $middleInitial = !empty($row['mi']) ? $row['mi'] . '.' : '';
             $facultyOptions[] = array(
-                'value' =>  $row['id'] . '|' . $row['first_name'] . ', ' . $row['last_name'] . ' ' . $row['mi'],
-                'text' => $row['first_name'] . ', ' . $row['last_name'] . ' ' . $row['mi']
+                'value' => $row['last_name'] . ', ' . $row['first_name'] . ' ' . $row['mi'],
+                'text' => $row['last_name'] . ', ' . $row['first_name'] . ' ' . $row['mi']
             );
         }
 

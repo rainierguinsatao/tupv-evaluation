@@ -107,8 +107,26 @@ include './adminheader.php';
                         $schoolyear = isset($_POST['schoolyear']) ? $_POST['schoolyear'] : "";
                         $course = isset($_POST['course']) ? $_POST['course'] : "";
                         $faculty_to_eval = isset($_POST['faculty_to_eval']) ? $_POST['faculty_to_eval'] : "";
+                        // Split the string into parts
+                        $parts = explode(', ', $faculty_to_eval);
+                        // Assign values to variables
+                        
+                        $faculty_to_eval_lname = $parts[0];
+                        $faculty_to_eval_fname_mi = isset($parts[1]) ? $parts[1] : '';
 
-                        $sql = "SELECT DISTINCT comms, name FROM `rate_score_tbl` WHERE term LIKE '$terms' AND sy LIKE '$schoolyear' AND course LIKE '$course' AND faculty LIKE '$faculty_to_eval' AND comms != ''";
+                        // Split the first_name_mi into first_name and mi
+                        $names = explode(' ', $faculty_to_eval_fname_mi);
+                        $faculty_to_eval_fname = implode(' ', array_slice($names, 0, -1));
+                        $faculty_to_eval_mi = end($names);
+
+                        // Output for testing
+                        '$faculty_to_eval_lname: ' . $faculty_to_eval_lname . '<br>';
+                        '$faculty_to_eval_fname: ' . $faculty_to_eval_fname . '<br>';
+                        '$faculty_to_eval_mi: ' . $faculty_to_eval_mi;
+
+                        $sql = "SELECT DISTINCT comms, name FROM `rate_score_tbl`
+                        INNER JOIN `accounts` ON `accounts`.`id` = `rate_score_tbl`.`gnrateid`
+                        WHERE `rate_score_tbl`.`term` LIKE '$terms' AND `rate_score_tbl`.`sy` LIKE '$schoolyear' AND `rate_score_tbl`.`course` LIKE '$course' AND `accounts`.`first_name` LIKE '$faculty_to_eval_fname' AND `accounts`.`last_name` LIKE '$faculty_to_eval_lname' AND `accounts`.`mi` LIKE '$faculty_to_eval_mi' AND comms != ''";
                         
                         $stmt = $conn->prepare($sql);
                         $result = mysqli_query($conn, $sql); 
@@ -193,8 +211,26 @@ include './adminheader.php';
             $schoolyear = isset($_POST['schoolyear']) ? $_POST['schoolyear'] : "";
             $course = isset($_POST['course']) ? $_POST['course'] : "";
             $faculty_to_eval = isset($_POST['faculty_to_eval']) ? $_POST['faculty_to_eval'] : "";
+            // Split the string into parts
+            $parts = explode(', ', $faculty_to_eval);
+            // Assign values to variables
+            
+            $faculty_to_eval_lname = $parts[0];
+            $faculty_to_eval_fname_mi = isset($parts[1]) ? $parts[1] : '';
 
-            $sql = "SELECT DISTINCT comms FROM `rate_score_tbl` WHERE term LIKE '$terms' AND sy LIKE '$schoolyear' AND course LIKE '$course' AND faculty LIKE '$faculty_to_eval' AND comms != ''";
+            // Split the first_name_mi into first_name and mi
+            $names = explode(' ', $faculty_to_eval_fname_mi);
+            $faculty_to_eval_fname = implode(' ', array_slice($names, 0, -1));
+            $faculty_to_eval_mi = end($names);
+
+            // Output for testing
+            '$faculty_to_eval_lname: ' . $faculty_to_eval_lname . '<br>';
+            '$faculty_to_eval_fname: ' . $faculty_to_eval_fname . '<br>';
+            '$faculty_to_eval_mi: ' . $faculty_to_eval_mi;
+
+            $sql = "SELECT DISTINCT comms, name FROM `rate_score_tbl`
+            INNER JOIN `accounts` ON `accounts`.`id` = `rate_score_tbl`.`gnrateid`
+            WHERE `rate_score_tbl`.`term` LIKE '$terms' AND `rate_score_tbl`.`sy` LIKE '$schoolyear' AND `rate_score_tbl`.`course` LIKE '$course' AND `accounts`.`first_name` LIKE '$faculty_to_eval_fname' AND `accounts`.`last_name` LIKE '$faculty_to_eval_lname' AND `accounts`.`mi` LIKE '$faculty_to_eval_mi' AND comms != ''";
             
             $stmt = $conn->prepare($sql);
             $result = mysqli_query($conn, $sql); 
@@ -278,7 +314,7 @@ include './adminheader.php';
     courseDropdown.addEventListener('change', function() {
         // Get the selected course value
         var selectedCourse = this.value;
-
+        // console.log(selectedCourse);
         if (selectedCourse === '') {
             // If no course is selected, disable the faculty dropdown
             facultyDropdown.innerHTML = '<option selected disabled hidden value="">Choose course first</option>';
@@ -301,9 +337,9 @@ include './adminheader.php';
                     facultyDropdown.disabled = false;
                 }
             };
-
+            console.log('../php/get_faculty_options1.php?course=' + selectedCourse);
             // Send the AJAX request with the correct path
-            xhttp.open('GET', '../php/get_faculty_options.php?course=' + selectedCourse, true);
+            xhttp.open('GET', '../php/get_faculty_options1.php?course=' + selectedCourse, true);
             xhttp.send();
         }
     });

@@ -8,10 +8,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Get the form data
     $name = $_POST['name'];
-    $course = $_POST['course'];
+    $CourseValue = $_POST['course'];
+    $modifiedCourseValue = str_replace("|", " - ", $CourseValue);
     $term = $_POST['term'];
     $schoolYear = $_POST['schoolyear'];
     $faculty = $_POST['faculty_to_eval'];
+    $facultyArray = explode("|", $faculty);
+    $facultyId = $_POST['faculty_to_eval_id'];
     $comms = $_POST['comms'];
     $type = "STUDENT";
     $ftype = "student";
@@ -23,12 +26,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $tits = $_POST['tits'][$qid];
 
      
-        $insertSql = "INSERT INTO rate_score_tbl (type, name, kind, course, term, sy, qid, faculty, score, tits, comms) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $insertSql = "INSERT INTO rate_score_tbl (type, name, kind, course, term, sy, qid, faculty, gnrateid, score, tits, comms) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($insertSql);
-        $stmt->bind_param("ssssssssiss", $type, $name, $ftype, $course, $term, $schoolYear, $qid, $faculty, $score, $tits, $comms);
+        $stmt->bind_param("sssssssssiss", $type, $name, $ftype, $modifiedCourseValue, $term, $schoolYear, $qid, $facultyArray[1], $facultyId, $score, $tits, $comms);
         $stmt->execute();
         $stmt->close();
     }
+    header("Location: success.php");
 }
 
 ?>
@@ -67,10 +71,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div>
                             <label for="course" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course <span class="text-[#C51E3A]">*</span></label>
-                            <select id="course" name="course" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <select id="course" name="course" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                                 <option selected disabled hidden value="">Choose Course</option>
                                 <?php
-                                    $sql = "SELECT * FROM courses_tbl";
+                                    $sql = "SELECT DISTINCT course, dept FROM `accounts` WHERE type != 'admin'";
                                     $stmt = $conn->prepare($sql);
                                     $result = mysqli_query($conn, $sql);
 
@@ -81,13 +85,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     }
                                     foreach ($courses as $index => $course):
                                 ?>
-                                    <option value="<?= $course['dept'] ?> - <?= $course['courseName'] ?>"><?= $course['dept'] ?> - <?= $course['courseName'] ?></option>
+                                    <option value="<?= $course['dept'] ?>|<?= $course['course'] ?>"><?= $course['dept'] ?> - <?= $course['course'] ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                         <div>
                             <label for="term" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Term <span class="text-[#C51E3A]">*</span></label>
-                            <select id="term" name="term" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <select id="term" name="term" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                                 <option selected disabled hidden value="">Choose Term</option>
                                 <option value="Prelim">Prelim</option>
                                 <option value="Midterm">Midterm</option>
@@ -96,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div>
                             <label for="schoolyear" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">S.Y.</label>
-                            <select id="schoolyear" name = 'schoolyear' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <select id="schoolyear" name = 'schoolyear' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                             <?php 
                                 $currentYear = date("Y");
                                 $endYear = $currentYear + 25; // Assuming you want options up to 75 years in the future
@@ -114,9 +118,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="flex flex-col gap-4 rounded-lg p-8 bg-white">
                         <div>
                             <label for="faculty_to_eval" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name of Faculty to Evaluate <span class="text-[#C51E3A]">*</span></label>
-                            <select id="faculty_to_eval" name="faculty_to_eval" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" disabled>
-                                <!-- <option selected disabled hidden value="">Choose</option> -->
+                            <select id="faculty_to_eval" name="faculty_to_eval" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" disabled required>
+
                             </select>
+                        </div>
+                        <div>
+                            <input type="text" name="faculty_to_eval_id" id="faculty_to_eval_id">
                         </div>
                     </div>
                     <div class="flex flex-col gap-4 rounded-lg p-8 bg-white">
@@ -287,11 +294,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </main>
 <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
+
 <script>
     // Add event listener to the course dropdown
     var courseDropdown = document.getElementById('course');
     var facultyDropdown = document.getElementById('faculty_to_eval');
-
     // Initially disable the faculty dropdown
     facultyDropdown.disabled = true;
     facultyDropdown.innerHTML = '<option selected disabled hidden value="">Choose course first</option>';
@@ -299,7 +306,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     courseDropdown.addEventListener('change', function() {
         // Get the selected course value
         var selectedCourse = this.value;
-
+        const selectedArray = selectedCourse.split('|');
         if (selectedCourse === '') {
             // If no course is selected, disable the faculty dropdown
             facultyDropdown.innerHTML = '<option selected disabled hidden value="">Choose course first</option>';
@@ -324,9 +331,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             };
 
             // Send the AJAX request with the correct path
-            xhttp.open('GET', '../php/get_faculty_options.php?course=' + selectedCourse, true);
+            xhttp.open('GET', '../php/get_faculty_options.php?course=' + selectedArray[1] + '&dept=' + selectedArray[0], true);
             xhttp.send();
+            
         }
+    });
+</script>
+<script>
+    var facultyId = document.getElementById('faculty_to_eval_id');
+
+    facultyDropdown.addEventListener("change", function() {
+        // Get the selected option
+        var selectedFaculty = facultyDropdown.options[facultyDropdown.selectedIndex];
+
+        // Get the value attribute of the selected option
+        var selectedFacultyValue = selectedFaculty.value;
+        const facultyArray = selectedFacultyValue.split('|');
+
+        // Set the value of the input field
+        facultyId.value = facultyArray[0];
     });
 </script>
 </body>
