@@ -70,19 +70,19 @@ if (isset($_GET['id'])) {
 
             <div class="grid md:grid-cols-3 md:gap-6 ">
                 <div class="relative z-0 w-full mb-6 group">
-                    <input type="text" name="first_name" id="floating_first_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value = "<?php echo $user['first_name']; ?>" />
+                    <input type="text" name="first_name" id="floating_first_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value = "<?php echo $user['first_name'];?>" />
                     <label for="floating_first_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First name</label>
                 </div>
 
 
                 <div class="relative z-0 w-full mb-6 group">
-                    <input type="text" name="last_name" id="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value = " <?php echo $user['last_name']; ?> "/>
+                    <input type="text" name="last_name" id="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value = "<?php echo $user['last_name']; ?>"/>
                     <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last name</label>
                 </div>
 
 
                 <div class="relative z-0 w-full mb-6 group">
-                    <input type="text" name="mi" id="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value = " <?php echo $user['mi']; ?> "/>
+                    <input type="text" name="mi" id="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value = "<?php echo $user['mi']; ?>"/>
                     <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Middle Initial</label>
                 </div>
             </div>
@@ -96,7 +96,7 @@ if (isset($_GET['id'])) {
 
 
                 <div class="relative z-0 w-full mb-6 group">
-                    <input type="text" name="password" id="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value = " <?php echo $user['password']; ?> "/>
+                    <input type="text" name="password" id="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value = "<?php echo $user['password']; ?>"/>
                     <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
                 </div>
             </div>
@@ -105,7 +105,7 @@ if (isset($_GET['id'])) {
             <div class="relative z-0 w-full mb-6 group">
             <label for="editcrsdept" class="block my-2 text-sm font-medium text-gray-900 dark:text-white">Department</label>
                     <select name="dept" id="editcrsdept" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option selected disabled ><?php echo $user['dept']; ?></option>
+                    <option selected class = "bg-red-500 text-white"><?php echo $user['dept']; ?></option>
                     <?php 
                         $sql = "SELECT DISTINCT `dept` FROM courses_tbl";
                         $stmt = $conn->prepare($sql);
@@ -125,7 +125,7 @@ if (isset($_GET['id'])) {
         <div class="relative z-0 w-full mb-6 group">
         <label for="editcrsdept" class="block my-2 text-sm font-medium text-gray-900 dark:text-white">Course</label>
                     <select name="course" id="editcrsdept" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option selected ><?php echo $user['course']; ?></option>
+                    <option selected class = "bg-red-500 text-white" ><?php echo $user['course']; ?></option>
                    
                     </select>
         
@@ -135,7 +135,7 @@ if (isset($_GET['id'])) {
             <div class="relative z-0 w-full mb-6 group">
         <label for="editcrsdept" class="block my-2 text-sm font-medium text-gray-900 dark:text-white">Faculty Type</label>
                     <select name="ftype" id="editcrsdept" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option selected ><?php echo $user['faculty_type']; ?></option>
+                    <option selected class = "bg-red-500 text-white" ><?php echo $user['faculty_type']; ?></option>
         
                         <option value="supervisor">supervisor</option>
                         <option value="faculty">faculty</option>

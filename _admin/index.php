@@ -11,14 +11,11 @@
     <link href="../dist/output.css" rel="stylesheet">
     <title>ADMIN | Evaluation</title>
 </head>
-<body>
+<body class = "bg-gray-100">
      <div class="flex">
-        <div class="w-[55%] h-screen bg-gradient-to-r from-[#C51E3A] to-[#7E7E7E] hidden lg:block">
-            <div class="flex justify-center items-center h-screen">
-                <img src="../images/girl_key.svg" class="w-[700px] container mx-auto " alt="Phone image" />
-            </div>
-        </div>
-        <div class="w-full lg:w-[45%] h-screen flex justify-center items-center">
+  
+        <div class="mx-auto w-full lg:w-[55%] h-screen flex justify-center items-center">
+          <div class="bg-white shadow rounded-md w-[80%] p-20">
             <div class="relative w-full p-[20px] md:p-[0px] bg-white flex flex-col">
                 <div class="mb-[32px] w-full flex flex-col items-center">
                     <img class="w-[110px] mb-[24px]" src="../images/Technological_University_of_the_Philippines_Seal.svg.png" alt="tupv-logo">
@@ -27,7 +24,7 @@
                         <a href="" class="border bg-[#C51E3A] rounded-full text-white py-[6px] px-[33px]">Student</a>
                         <a href="" class="border border-[#C51E3A] text-[#C51E3A] rounded-full py-[6px] px-[33px] hover:text-white hover:bg-[#C51E3A]">Faculty</a>
                     </div> --}} -->
-                    <form id="login-form" action="../php/login.php" method="post" class="w-full max-w-sm">
+                    <form id="login-form" action="../php/login.php" method="post" class="w-full max-w-sm ">
                       <div class="w-full">
                         <div class="mb-4">
                           <label class="block mb-2 font-medium" for="username">
@@ -43,12 +40,23 @@
                           <!-- {{-- <p class="text-red text-xs italic">Please choose a password.</p> --}} -->
                         </div>
                         <button form="login-form" class="w-full bg-[#C51E3A] text-white rounded-full py-2 px-3 hover:bg-white border hover:border-[#C51E3A] hover:text-[#C51E3A] duration-200" type="submit" name="loginbtn">Login</button>
-                        
+
                       </div>
+                      
                     </form>
+                    
+                    <a  href = "../_faculty/index.php" class="w-[80%] text-center mt-5 mx-auto text-red-700 rounded-full py-2 px-3 hover:bg-white border hover:border-[#C51E3A] hover:text-[#C51E3A] duration-200" type="submit" name="loginbtn">Faculty</a>
+                    
                   </div>
             </div>
+            </div>
         </div>
+        <!-- <div class="w-[45%] h-screen  hidden lg:block">
+          <div class="mx-auto w-[90%] mt-24 h-[80%]">
+          <img src="../images/login.png"  alt="" srcset="">
+          </div>
+                     
+            </div> -->
     </div>
     
     <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>

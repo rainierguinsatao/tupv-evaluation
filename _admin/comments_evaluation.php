@@ -108,7 +108,7 @@ include './adminheader.php';
                         $course = isset($_POST['course']) ? $_POST['course'] : "";
                         $faculty_to_eval = isset($_POST['faculty_to_eval']) ? $_POST['faculty_to_eval'] : "";
 
-                        $sql = "SELECT DISTINCT comms FROM `rate_score_tbl` WHERE term LIKE '$terms' AND sy LIKE '$schoolyear' AND course LIKE '$course' AND faculty LIKE '$faculty_to_eval' AND comms != ''";
+                        $sql = "SELECT DISTINCT comms, name FROM `rate_score_tbl` WHERE term LIKE '$terms' AND sy LIKE '$schoolyear' AND course LIKE '$course' AND faculty LIKE '$faculty_to_eval' AND comms != ''";
                         
                         $stmt = $conn->prepare($sql);
                         $result = mysqli_query($conn, $sql); 
@@ -169,6 +169,7 @@ include './adminheader.php';
                         $i = 1; // Initialize $i before the loop
                         foreach ($accounts as $index => $acc):
                     ?>            
+                        <h1><span class="mr-4 print-hide mb-10"><span class = "text-md font-bold text-dark">NAME:</span> <?= $acc['name']?></h1>
                         <h1><span class="mr-4"><?php echo $i ?>.</span><?= $acc['comms']?></h1>
                         
                     <?php 
@@ -243,8 +244,12 @@ include './adminheader.php';
             </header>  
             <?php
             $i = 1; // Initialize $i before the loop
+            
             foreach ($accounts as $index => $acc):
-        ?>            
+        ?>       
+
+        
+                 
             <h1><span class="mr-4"><?php echo $i ?>.</span><?= $acc['comms']?></h1>
         <?php 
         $i++; // Increment $i inside the loop
