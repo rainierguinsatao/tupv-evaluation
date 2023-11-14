@@ -3234,16 +3234,12 @@ input:checked + .toggle-bg {
     width: 50%;
   }
 
-  .lg\:w-\[54\%\] {
-    width: 54%;
+  .lg\:w-\[55\%\] {
+    width: 55%;
   }
 
   .lg\:w-full {
     width: 100%;
-  }
-
-  .lg\:w-\[55\%\] {
-    width: 55%;
   }
 
   .lg\:max-w-6xl {

@@ -106,7 +106,7 @@
                             <h1 class="font-semibold text-[#C51E3A] uppercase">information</h1>
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">When evaluating teachers, honestly acknowledge their strengths, citing specific examples that impressed you, and express constructive concerns or suggestions for improvement. Thank you for your cooperation.</p>
 
-                            <h1 class="font-semibold text-[#C51E3A] text-sm italic uppercase mt-5">NOTE: Once you click finished evaluation, it is considered that you are done on evaluation on your; SUPERVISORS, PEERS, and your SELF. You can't login until the next evaluation.</h1>
+                            <h1 class="font-semibold text-[#C51E3A] text-sm italic uppercase mt-5">NOTE: Once you click finished evaluation, it is considered that you are done on evaluating your; SUPERVISORS, PEERS, and your SELF. You can't login until the next evaluation.</h1>
 
 
                         </div>

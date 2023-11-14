@@ -19,9 +19,6 @@ if ($result) {
 }
 foreach ($accounts as $index => $acc):
 ?>
-
-
-
 <input type="hidden" name = "nagrateid" value = "<?= $acc['id'] ?>">
 <input type="hidden" name="full_name" value="<?= $acc['last_name'] . ', ' . $acc['first_name'] . ' ' . $acc['mi'] ?>.">
 <input type="hidden" name = "course" value = "<?= $acc['dept'] ?> - <?= $acc['course'] ?>">
@@ -63,37 +60,41 @@ if ($selectedOption == 'Supervisor') {
     </div>
     
     <div class="p-6 border bg-white rounded-lg">
-  
-        <label for="faculty_to_eval" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name of Faculty to Evaluate <span class="text-[#C51E3A]">*</span></label>
-        <select id="faculty_to_eval" name="faculty_to_eval" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-            <option selected disabled hidden value="">Choose</option>
+    <label for="faculty_to_eval" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name of Faculty to Evaluate <span class="text-[#C51E3A]">*</span></label>
+<select id="faculty_to_eval" name="faculty_to_eval" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+    <option selected disabled hidden value="">Choose</option>
 
-            <?php 
-            // Modify the SQL query to fetch faculty members based on the selected course
-            $sql = "SELECT * FROM accounts 
-            WHERE faculty_type = 'supervisor' 
-              AND course = '$userdept' 
-              AND dept = '$usercourse'
-              AND id != '$userid'
-            ORDER BY last_name ASC;
-            ";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->get_result();
+    <?php
+// Modify the SQL query to fetch faculty members not evaluated by the user
+$sql = "SELECT * FROM accounts 
+        WHERE faculty_type = 'supervisor' 
+          AND course = '$userdept' 
+          AND dept = '$usercourse'
+          AND id != '$userid'
+          AND NOT EXISTS (
+            SELECT 1 FROM rate_score_tbl
+            WHERE gnrateid = accounts.id
+              AND nagrateid = '$userid'
+          )
+        ORDER BY last_name ASC;";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$result = $stmt->get_result();
 
-            if ($result) {
-                $facultyOptions = array();
-                while ($row = $result->fetch_assoc()) {
-                $middleInitial = !empty($row['mi']) ? $row['mi'] . '.' : '';
-            ?>
-            
-            <option value="<?=$row['last_name'] . ', ' . $row['first_name'] . ' ' . $middleInitial?>"><?=$row['last_name'] . ', ' . $row['first_name'] . ' ' . $middleInitial?></option>
-             <input type="hidden" name="gnrateid" value="<?php echo $row['id'] ?>">
-            <?php 
-                }
-            }
-            ?>
-        </select>
+if ($result) {
+    $facultyOptions = array();
+    while ($row = $result->fetch_assoc()) {
+        $middleInitial = !empty($row['mi']) ? $row['mi'] . '.' : '';
+        $fullName = $row['last_name'] . ', ' . $row['first_name'] . ' ' . $middleInitial;
+        ?>
+        <option value="<?=$row['id'] . '|' . $fullName?>"><?=$fullName?></option>
+        <?php
+    }
+}
+?>
+</select>
+
+
     </div>
     <div class="p-6 border bg-white rounded-lg">
         <h1 class="text-2xl font-semibold">Form</h1>
@@ -274,40 +275,39 @@ if ($selectedOption == 'Supervisor') {
     </div>
     
     <div class="p-6 border bg-white rounded-lg">
-        <label for="faculty_to_eval" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name of Faculty to Evaluate <span class="text-[#C51E3A]">*</span></label>
-        <select id="faculty_to_eval" name="faculty_to_eval" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-            <option selected disabled hidden value="">Choose</option>
-            <?php 
-            // Modify the SQL query to fetch faculty members based on the selected course
-            $sql = "SELECT * FROM accounts 
-            WHERE faculty_type = 'faculty' 
-              AND course = '$userdept' 
-              AND dept = '$usercourse'
-              AND id != '$userid'
-            ORDER BY last_name ASC;
-            ";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->get_result();
+    <label for="faculty_to_eval" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name of Faculty to Evaluate <span class="text-[#C51E3A]">*</span></label>
+    <select id="faculty_to_eval" name="faculty_to_eval" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+    <option selected disabled hidden value="">Choose</option>
 
-            if ($result) {
-                $facultyOptions = array();
-                while ($row = $result->fetch_assoc()) {
-                $middleInitial = !empty($row['mi']) ? $row['mi'] . '.' : '';
-            ?>
-            
-            <option value="<?=$row['last_name'] . ', ' . $row['first_name'] . ' ' . $middleInitial?>"><?=$row['last_name'] . ', ' . $row['first_name'] . ' ' . $middleInitial?></option>
+    <?php
+// Modify the SQL query to fetch faculty members not evaluated by the user
+$sql = "SELECT * FROM accounts 
+        WHERE faculty_type = 'faculty' 
+          AND course = '$userdept' 
+          AND dept = '$usercourse'
+          AND id != '$userid'
+          AND NOT EXISTS (
+            SELECT 1 FROM rate_score_tbl
+            WHERE gnrateid = accounts.id
+              AND nagrateid = '$userid'
+          )
+        ORDER BY last_name ASC;";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$result = $stmt->get_result();
 
-            
-
-            <input type="hidden" name="gnrateid" value="<?php echo $row['id'] ?>">
-       
-
-            <?php 
-                }
-            }
-            ?>
-        </select>
+if ($result) {
+    $facultyOptions = array();
+    while ($row = $result->fetch_assoc()) {
+        $middleInitial = !empty($row['mi']) ? $row['mi'] . '.' : '';
+        $fullName = $row['last_name'] . ', ' . $row['first_name'] . ' ' . $middleInitial;
+        ?>
+        <option value="<?=$row['id'] . '|' . $fullName?>"><?=$fullName?></option>
+        <?php
+    }
+}
+?>
+</select>
     </div>
     <div class="p-6 border bg-white rounded-lg">
         <h1 class="text-2xl font-semibold">Form</h1>
@@ -605,7 +605,7 @@ if ($selectedOption == 'Supervisor') {
 
                 foreach ($questions as $index => $question): 
             ?>
-            <div class="flex">
+            <div class="flex"></div>
             <input type="hidden" name="tits[<?= $question['id'] ?>]" value="<?= $question['qid'] ?>">
                 <span class="m-2 text-gray-800"><?= ($index + 1) . "." ?></span>
                     

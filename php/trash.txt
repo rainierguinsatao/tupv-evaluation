@@ -1,0 +1,31 @@
+<select id="faculty_to_eval" name="faculty_to_eval" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+    <option selected disabled hidden value="">Choose</option>
+
+    <?php 
+    // Modify the SQL query to fetch faculty members based on the selected course
+    $sql = "SELECT * FROM accounts 
+    WHERE faculty_type = 'supervisor' 
+      AND course = '$userdept' 
+      AND dept = '$usercourse'
+      AND id != '$userid'
+    ORDER BY last_name ASC;
+    ";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result) {
+        $facultyOptions = array();
+        while ($row = $result->fetch_assoc()) {
+        $middleInitial = !empty($row['mi']) ? $row['mi'] . '.' : '';
+        $fullName = $row['last_name'] . ', ' . $row['first_name'] . ' ' . $middleInitial;
+    ?>
+ 
+    <option value="<?=$row['id'] . '|' . $fullName?>"><?=$fullName?></option>
+             
+    <?php 
+            }
+        }
+    ?>
+            
+</select>

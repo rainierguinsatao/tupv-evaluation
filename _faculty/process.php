@@ -2,14 +2,13 @@
 include "../db/conn.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    list($gnrateid, $faculty_to_eval) = explode('|', $_POST['faculty_to_eval']);
     $ftype = $_POST['ftype'];
     $fn = $_POST['full_name'];
     $selectOption = $_POST['selectOption'];
     $course = $_POST['course'];
     $term = $_POST['term'];
     $schoolyear = $_POST['schoolyear'];
-    $faculty_to_eval = $_POST['faculty_to_eval'];
-    $gnrateid = $_POST['gnrateid'];
     $nagrateid = $_POST['nagrateid'];
 
     foreach ($_POST['question'] as $qid => $score) {
