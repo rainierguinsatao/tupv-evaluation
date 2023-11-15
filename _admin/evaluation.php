@@ -135,7 +135,9 @@ include './adminheader.php';
                             '$faculty_to_eval_fname: ' . $faculty_to_eval_fname . '<br>';
                             '$faculty_to_eval_mi: ' . $faculty_to_eval_mi;
 
-                            $sql = "SELECT * FROM `rate_score_tbl`
+                            echo $sql = "SELECT `rate_score_tbl`.`type` AS formType, 
+                            `rate_score_tbl`.*, 
+                            `accounts`.* FROM `rate_score_tbl`
                             INNER JOIN `accounts` ON `accounts`.`id` = `rate_score_tbl`.`gnrateid`
                             WHERE `rate_score_tbl`.`term` LIKE '$terms' AND `rate_score_tbl`.`sy` LIKE '$schoolyear' AND `rate_score_tbl`.`course` LIKE '$course' AND `accounts`.`first_name` LIKE '$faculty_to_eval_fname' AND `accounts`.`last_name` LIKE '$faculty_to_eval_lname' AND `accounts`.`mi` LIKE '$faculty_to_eval_mi';";
 
@@ -160,9 +162,10 @@ include './adminheader.php';
                                 });
 
                                 $filterself = array_filter($scores, function($score) use ($faculty_to_eval) {
-                                    return $score['name'] == $faculty_to_eval;
+                                    return $score['formType'] == 'Self';
+                                   ;
                                 });
-                                
+                                 echo $faculty_to_eval;
 
                                 
                     ?>                        

@@ -22,10 +22,14 @@ if (isset($_POST['loginfacultybtn'])) {
                 $_SESSION['alertOff'] = $_SESSION['alertOff'] = "Welcome " . $acr . ", Ready to evaluate?";
                 $_SESSION['alertOffColor'] = "blue";
                 header('location:../_faculty/faculty.php');
-            } else {
+            } else if ($switchValue == 0) {
                 $_SESSION['alertOff'] = " Evaluation has not started yet, Try again Later";
                 $_SESSION['alertOffColor'] = "blue";
                 header('location:../_faculty/offpage.php');
+            } else {
+                $_SESSION['alertOff'] = "Newly Added";
+                $_SESSION['alertOffColor'] = "blue";
+                header('location:../_faculty/newlyadded.php');
             }
         }
     } else {

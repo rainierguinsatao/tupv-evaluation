@@ -174,45 +174,56 @@
 <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-    $(document).ready(function() {
-      // Retrieve the stored value from local storage
-      var storedValue = localStorage.getItem("toggleSwitchState");
+        $(document).ready(function () {
+            // Retrieve the stored value from local storage
+            var storedValue = localStorage.getItem("toggleSwitchState");
 
-      // If a stored value exists, set the toggle switch accordingly
-      if (storedValue) {
-        $("#toggleSwitch").prop("checked", storedValue === "1");
-        updateEvaluationStatus(storedValue === "1"); // Update status initially
-      }
+            // If a stored value exists, set the toggle switch accordingly
+            if (storedValue) {
+                $("#toggleSwitch").prop("checked", storedValue === "1");
+                updateEvaluationStatus(storedValue === "1"); // Update status initially
+            }
 
-      // Event listener for toggle switch changes
-      $("#toggleSwitch").change(function() {
-        var isChecked = $(this).prop("checked");
-        var valueToUpdate = isChecked ? "1" : "0";
+            // Event listener for toggle switch changes
+            $("#toggleSwitch").change(function () {
+                var isChecked = $(this).prop("checked");
+                var valueToUpdate = isChecked ? "1" : "0";
 
-        // Update the local storage with the current state
-        localStorage.setItem("toggleSwitchState", valueToUpdate);
+                // Ask for confirmation before updating the switch state
+                var confirmationMessage = isChecked ? "Are you sure you want to turn ON evaluation?" : "Are you sure you want to turn OFF evaluation?";
+                if (confirm(confirmationMessage)) {
+                    // Update the local storage with the current state
+                    localStorage.setItem("toggleSwitchState", valueToUpdate);
 
-        // Make an AJAX request to update the database
-        $.ajax({
-          type: "POST",
-          url: "../php/updateDatabase.php", // replace with your backend script
-          data: { value: valueToUpdate },
-          success: function(response) {
-            console.log(response); // log the response from the server
-            updateEvaluationStatus(isChecked);
-          },
-          error: function(error) {
-            console.error(error); // log any errors
-          }
+                    // Make an AJAX request to update the database
+                    $.ajax({
+                        type: "POST",
+                        url: "../php/updateDatabase.php", // replace with your backend script
+                        data: {
+                            value: valueToUpdate
+                        },
+                        success: function (response) {
+                            console.log(response); // log the response from the server
+                            updateEvaluationStatus(isChecked);
+                            // Refresh the page after successful update
+                            location.reload();
+                        },
+                        error: function (error) {
+                            console.error(error); // log any errors
+                        }
+                    });
+                } else {
+                    // If the user cancels the confirmation, revert the switch state
+                    $(this).prop("checked", !isChecked);
+                }
+            });
+
+            // Function to update the evaluation status text
+            function updateEvaluationStatus(isOn) {
+                var statusText = isOn ? "Evaluation status: ON" : "Evaluation status: OFF";
+                $("#evaluationStatus").text(statusText);
+            }
         });
-      });
-
-      // Function to update the evaluation status text
-      function updateEvaluationStatus(isOn) {
-        var statusText = isOn ? "Evaluation status: ON" : "Evaluation status: OFF";
-        $("#evaluationStatus").text(statusText);
-      }
-    });
-</script>
+    </script>
 </body>
 </html>

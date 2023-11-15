@@ -15,18 +15,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $tits = $_POST['tits'][$qid];
 
         if ($selectOption == 'Supervisor' || $selectOption == 'Peer to Peer' || $selectOption == 'Self') {
-            $sql = "INSERT INTO rate_score_tbl (type, name, kind, course, term, sy, qid, tits, faculty, score, gnrateid, nagrateid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            $stmt = $conn->prepare($sql);
+            // Insert into rate_score_tbl
+            $sql1 = "INSERT INTO rate_score_tbl (type, name, kind, course, term, sy, qid, tits, faculty, score, gnrateid, nagrateid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt1 = $conn->prepare($sql1);
 
-            if ($stmt) {
+            if ($stmt1) {
                 if ($selectOption == 'Self') {
-                    $stmt->bind_param("sssssssssiii", $selectOption, $fn, $ftype, $course, $term, $schoolyear, $qid, $tits, $fn, $score, $nagrateid, $nagrateid);
+                    $stmt1->bind_param("sssssssssiii", $selectOption, $fn, $ftype, $course, $term, $schoolyear, $qid, $tits, $fn, $score, $nagrateid, $nagrateid);
                 } else {
-                    $stmt->bind_param("sssssssssiii", $selectOption, $fn, $ftype, $course, $term, $schoolyear, $qid, $tits, $faculty_to_eval, $score, $gnrateid, $nagrateid);
+                    $stmt1->bind_param("sssssssssiii", $selectOption, $fn, $ftype, $course, $term, $schoolyear, $qid, $tits, $faculty_to_eval, $score, $gnrateid, $nagrateid);
                 }
 
-                $stmt->execute();
-                $stmt->close();
+                $stmt1->execute();
+                $stmt1->close();
+            } else {
+                // Handle SQL error
+                echo "SQL Error: " . $conn->error;
+            }
+
+            // Insert into rate_score_tbl2
+            $sql2 = "INSERT INTO rate_score_tbl2 (type, name, kind, course, term, sy, qid, tits, faculty, score, gnrateid, nagrateid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt2 = $conn->prepare($sql2);
+
+            if ($stmt2) {
+                if ($selectOption == 'Self') {
+                    $stmt2->bind_param("sssssssssiii", $selectOption, $fn, $ftype, $course, $term, $schoolyear, $qid, $tits, $fn, $score, $nagrateid, $nagrateid);
+                } else {
+                    $stmt2->bind_param("sssssssssiii", $selectOption, $fn, $ftype, $course, $term, $schoolyear, $qid, $tits, $faculty_to_eval, $score, $gnrateid, $nagrateid);
+                }
+
+                $stmt2->execute();
+                $stmt2->close();
             } else {
                 // Handle SQL error
                 echo "SQL Error: " . $conn->error;

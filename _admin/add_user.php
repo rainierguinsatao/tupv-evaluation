@@ -14,11 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dept = $_POST['dept'];
     $type = "user";
     $course = $_POST['course'];
+    $pending = "3";
 
     // Update user information in the database
-    $sql = "INSERT INTO accounts SET first_name = ?, last_name = ?,  mi = ?,  email = ?,  password = ?, type = ?, faculty_type = ?,  dept = ?,  course = ?";
+    $sql = "INSERT INTO accounts SET first_name = ?, last_name = ?,  mi = ?,  email = ?,  password = ?, type = ?, faculty_type = ?,  dept = ?,  course = ?, switch = ? ";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssss", $firstName, $lastName, $mi, $email, $password, $type, $facultyType, $dept, $course, );
+    $stmt->bind_param("sssssssssi", $firstName, $lastName, $mi, $email, $password, $type, $facultyType, $dept, $course, $pending);
 
     if ($stmt->execute()) {
         header("location: ./user.php");

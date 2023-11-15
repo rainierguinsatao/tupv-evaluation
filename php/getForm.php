@@ -72,7 +72,7 @@ $sql = "SELECT * FROM accounts
           AND dept = '$usercourse'
           AND id != '$userid'
           AND NOT EXISTS (
-            SELECT 1 FROM rate_score_tbl
+            SELECT 1 FROM rate_score_tbl2
             WHERE gnrateid = accounts.id
               AND nagrateid = '$userid'
           )
@@ -287,7 +287,7 @@ $sql = "SELECT * FROM accounts
           AND dept = '$usercourse'
           AND id != '$userid'
           AND NOT EXISTS (
-            SELECT 1 FROM rate_score_tbl
+            SELECT 1 FROM rate_score_tbl2
             WHERE gnrateid = accounts.id
               AND nagrateid = '$userid'
           )
