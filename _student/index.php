@@ -123,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </select>
                         </div>
                         <div>
-                            <input type="text" name="faculty_to_eval_id" id="faculty_to_eval_id">
+                            <input type="hidden" name="faculty_to_eval_id" id="faculty_to_eval_id">
                         </div>
                     </div>
                     <div class="flex flex-col gap-4 rounded-lg p-8 bg-white">
