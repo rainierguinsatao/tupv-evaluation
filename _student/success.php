@@ -17,7 +17,10 @@
             <p class="mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">Evaluation Completed!</p>
             <p class="mb-4 text-lg font-light text-gray-600 dark:text-gray-400">Thank you for taking the time to complete the evaluation.</p>
             <p class="text-sm text-gray-500">Plot twist! The admin can see your name and comments.😁</p>
-            <a href="../_faculty/index.php" class="inline-flex bg-red-800 text-white hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900 my-4">Back to Login Page</a>
+            <div class="flex items-center justify-center space-x-2">
+                <a href="../_faculty/index.php" class="inline-flex bg-red-800 text-white hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900 my-4">Back to Login Page</a>
+                <a href="index.php" class="inline-flex bg-red-800 text-white hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900 my-4">Evaluate another?</a>
+            </div>
         </div>   
     </div>
 </section>
