@@ -1,6 +1,7 @@
 <?php
     include '../db/conn.php';
     include '../php/session_faculty.php';
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,33 +70,54 @@
 
 <main class="container mx-auto">
     <div>
-        <?php
+    <?php
+            // Fetch information from the accounts table
             $sql = "SELECT * FROM accounts WHERE id = {$_SESSION['id']}";
             $stmt = $conn->prepare($sql);
             $result = mysqli_query($conn, $sql);
-
-
-           
 
             if ($result) {
                 $accounts = mysqli_fetch_all($result, MYSQLI_ASSOC);
             } else {
                 echo "Error: " . mysqli_error($conn);
             }
+
+            // Process information from the accounts table
             foreach ($accounts as $index => $acc):
                 $facultyType = $acc['faculty_type'];
-        ?>
-        
-        
+                $userFirstName = $acc['first_name'];
+                $userMI = $acc['mi'];
+                $userLastName = $acc['last_name'];
+                $userDept = $acc['dept'];
+                $userCourse = $acc['course'];
+                $userId = $_SESSION['id'];
+            endforeach;
 
-                
-        <h1 class="text-2xl font-bold hidden">Hi, <?= $acc['first_name'] ?> <?= $acc['mi'] ?> <?= $acc['last_name'] ?></h1>
-        <h1 id="user_course" class="text-2xl font-bold hidden"><?= $acc['dept'] ?></h1>
-        <h1 id="user_dept" class="text-2xl font-bold hidden"><?= $acc['course'] ?></h1>
-        <h1 id="ftype" class="text-2xl font-bold hidden"><?= $acc['faculty_type'] ?></h1>
-       
-        <h1 id="user_id" class="text-2xl font-bold hidden"><?= $_SESSION['id'] ?></h1>
-        <?php endforeach; ?>
+            // Fetch information from the rate_score_tbl table
+            $sql = "SELECT * FROM rate_score_tbl2 WHERE nagrateid = {$_SESSION['id']}";
+            $stmt = $conn->prepare($sql);
+            $result = mysqli_query($conn, $sql);
+
+            if ($result) {
+                $accounts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            } else {
+                echo "Error: " . mysqli_error($conn);
+            }
+
+            // Process information from the rate_score_tbl table
+            foreach ($accounts as $index => $acc):
+                $selectedClass = $acc['kind'];
+            endforeach;
+            ?>
+
+            <!-- Print HTML elements using the fetched data -->
+            <h1 class="text-2xl font-bold hidden">Hi, <?= $userFirstName ?> <?= $userMI ?> <?= $userLastName ?></h1>
+            <h1 id="user_course" class="text-2xl font-bold hidden"><?= $userDept ?></h1>
+            <h1 id="user_dept" class="text-2xl font-bold hidden"><?= $userCourse ?></h1>
+            <h1 id="ftype" class="text-2xl font-bold hidden"><?= $facultyType ?></h1>
+            <h1 id="user_id" class="text-2xl font-bold hidden"><?= $userId ?></h1>
+            <h1 id="selectedClass" class="text-2xl font-bold hidden"><?= $selectedClass ?></h1>
+
     </div>
     <?php   include '../_admin/alert.php';
         ?>
@@ -114,11 +136,11 @@
 
             <div class="p-6 bg-white border rounded-lg mb-4">
             <div class="text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800 mb-2">
-                            <p class="mt-1 text-md font-normal text-gray-900 dark:text-gray-400"><span class = "text-gray-400 uppercase text-xs">Name:</span> <?= $acc['first_name'] ?> <?= $acc['mi'] ?> <?= $acc['last_name'] ?></p>
+                            <p class="mt-1 text-md font-normal text-gray-900 dark:text-gray-400"><span class = "text-gray-400 uppercase text-xs">Name:</span><?= $userFirstName ?> <?= $userMI ?> <?= $userLastName ?></p>
 
-                            <p class="mt-1 text-md font-normal text-gray-900 dark:text-gray-400"><span class = "text-gray-400 uppercase text-xs">DEPARTMENT|COURSE:</span> <?= $acc['dept'] ?> - <?= $acc['course'] ?></p>
+                            <p class="mt-1 text-md font-normal text-gray-900 dark:text-gray-400"><span class = "text-gray-400 uppercase text-xs">DEPARTMENT|COURSE:</span><?= $userDept ?> - <?= $userCourse ?></p>
 
-                            <p class="mt-1 text-md font-normal text-gray-900 dark:text-gray-400 uppercase"><span class = "text-gray-400 uppercase text-xs">TYPE:</span> <?= $acc['faculty_type'] ?></p>
+                            <p class="mt-1 text-md font-normal text-gray-900 dark:text-gray-400 uppercase"><span class = "text-gray-400 uppercase text-xs">TYPE:</span> <?= $facultyType ?></p>
                         </div>
             </div>
         
@@ -129,12 +151,12 @@
                 <select id="selectOption" name="selectOption" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" onchange="changeForm()" >
                     <option selected disabled hidden value="">Choose</option>
                 <?php if ($facultyType == 'supervisor'): ?>
-                    <option value="Peer to Peer">Peer to Peer</option>
+                    <option value="Peer to Peer">Peer</option>
                     <option value="Self">Self</option>
                 <?php else: ?>
                     <option value="Supervisor">Supervisor</option>
                     <option value="Self">Self</option>
-                    <option value="Peer to Peer">Peer to Peer</option>
+                    <option value="Peer to Peer">Peer</option>
                 <?php endif; ?>
                     <!-- Add more options as needed -->
                 </select>
@@ -154,7 +176,7 @@
     function changeForm() {
     var selectedOption = document.getElementById("selectOption").value;
     var formContainer = document.getElementById("formContainer");
-    
+    var selectedClass = document.getElementById("selectedClass");
     var courseText = document.getElementById("user_course").innerText;
     var deptText = document.getElementById("user_dept").innerText;
     console.log(selectedOption);
@@ -167,7 +189,7 @@
         formContainer.innerHTML = xhr.responseText;
         }
     };
-    xhr.open("GET", "../php/getForm.php?option=" + selectedOption + "&course=" + encodeURIComponent(courseText) + "&dept=" + encodeURIComponent(deptText) + "&id=" + encodeURIComponent(courseid), true);
+    xhr.open("GET", "../php/getForm.php?option=" + selectedOption + "&course=" + encodeURIComponent(courseText) + "&dept=" + encodeURIComponent(deptText) + "&id=" + encodeURIComponent(courseid) + "&kind=" + encodeURIComponent(selectedClass), true);
     xhr.send();
     }
 

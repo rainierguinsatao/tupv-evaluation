@@ -8,6 +8,7 @@ $userid = $_GET['id'];
 
 
 
+
 $sql = "SELECT * FROM accounts WHERE id = '$userid'";
 $stmt = $conn->prepare($sql);
 $result = mysqli_query($conn, $sql);
@@ -18,6 +19,7 @@ if ($result) {
     echo "Error: " . mysqli_error($conn);
 }
 foreach ($accounts as $index => $acc):
+    $ft = $acc['faculty_type'];
 ?>
 <input type="hidden" name = "nagrateid" value = "<?= $acc['id'] ?>">
 <input type="hidden" name="full_name" value="<?= $acc['last_name'] . ', ' . $acc['first_name'] . ' ' . $acc['mi'] ?>.">
@@ -30,16 +32,37 @@ foreach ($accounts as $index => $acc):
 
 <?php
 
+
+
+
 if ($selectedOption == 'Supervisor') {
   ?> 
     <div class="p-6 bg-white border rounded-lg">
         <div>
+            <?php 
+            if ($ft == 'supervisor') {
+            ?>
+
+            
+            <label for="selectedClass" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rate as: </label>
+            <select id="selectedClass" name="selectedClass" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option selected disabled hidden value="">Choose</option>
+                <option value="supervisor">Supervisor</option>
+                <option value="faculty">Peer</option>
+            
+                <!-- Add more options as needed -->
+            </select>
+
+            <?php }?>
+
+
+
             <label for="term" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Term <span class="text-[#C51E3A]">*</span></label>
             <select id="term" name="term" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                 <option selected disabled hidden value="">Choose Term</option>
-                <option value="Prelim">Prelim</option>
-                <option value="Midterm">Midterm</option>
-                <option value="Endterm">Endterm</option>
+                <option value="Prelim">First Term</option>
+                <option value="Midterm">Second Term</option>
+                <option value="Endterm">Third Term</option>
             </select>
         </div>
         <div>
@@ -249,12 +272,29 @@ if ($result) {
   ?> 
     <div class="p-6 border bg-white rounded-lg">
         <div>
+        <?php 
+            if ($ft == 'supervisor') {
+            ?>
+
+            
+            <label for="selectedClass" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rate as: </label>
+            <select id="selectedClass" name="selectedClass" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option selected disabled hidden value="">Choose</option>
+                <option value="supervisor">Supervisor</option>
+                <option value="faculty">Peer</option>
+            
+                <!-- Add more options as needed -->
+            </select>
+
+            <?php }?>
+
+            
             <label for="term" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Term <span class="text-[#C51E3A]">*</span></label>
             <select id="term" name="term" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                 <option selected disabled hidden value="">Choose Term</option>
-                <option value="Prelim">Prelim</option>
-                <option value="Midterm">Midterm</option>
-                <option value="Endterm">Endterm</option>
+                <option value="Prelim">First Term</option>
+                <option value="Midterm">Second Term</option>
+                <option value="Endterm">Third Term</option>
             </select>
         </div>
         <div>
@@ -465,9 +505,9 @@ if ($result) {
             <label for="term" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Term <span class="text-[#C51E3A]">*</span></label>
             <select id="term" name="term" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                 <option selected disabled hidden value="">Choose Term</option>
-                <option value="Prelim">Prelim</option>
-                <option value="Midterm">Midterm</option>
-                <option value="Endterm">Endterm</option>
+                <option value="Prelim">First Term</option>
+                <option value="Midterm">Second Term</option>
+                <option value="Endterm">Third Term</option>
             </select>
         </div>
         <div>
