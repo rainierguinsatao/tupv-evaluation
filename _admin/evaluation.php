@@ -44,7 +44,19 @@ include './adminheader.php';
                                 }
                                 foreach ($courses as $index => $course):
                             ?>
-                        <option value="<?= $course['term'] ?>"><?= $course['term'] ?></option>
+                        <option value="<?= $course['term'] ?>">
+                            <?php 
+                            if ($course['term'] == 'Prelim') {
+                                echo 'First Term';
+                            } elseif ($course['term'] == 'Midterm') {
+                                echo 'Second Term';
+                            } elseif ($course['term'] == 'Endterm') {
+                                echo 'Third Term';
+                            } else {
+                                echo 'Unknown Term'; // This will be echoed if $terms doesn't match any of the specified terms
+                            }
+                            ?>
+                        </option>
                         <?php endforeach; ?>
                         </select>
                     </div>
@@ -135,7 +147,7 @@ include './adminheader.php';
                             '$faculty_to_eval_fname: ' . $faculty_to_eval_fname . '<br>';
                             '$faculty_to_eval_mi: ' . $faculty_to_eval_mi;
 
-                            echo $sql = "SELECT `rate_score_tbl`.`type` AS formType, 
+                            $sql = "SELECT `rate_score_tbl`.`type` AS formType, 
                             `rate_score_tbl`.*, 
                             `accounts`.* FROM `rate_score_tbl`
                             INNER JOIN `accounts` ON `accounts`.`id` = `rate_score_tbl`.`gnrateid`
@@ -161,11 +173,10 @@ include './adminheader.php';
                                     return $score['kind'] == 'supervisor';
                                 });
 
-                                $filterself = array_filter($scores, function($score) use ($faculty_to_eval) {
+                                $filterself = array_filter($scores, function($score) {
                                     return $score['formType'] == 'Self';
                                    ;
                                 });
-                                 echo $faculty_to_eval;
 
                                 
                     ?>                        
@@ -179,7 +190,21 @@ include './adminheader.php';
 
 
                                 <div class="border-4 border-black px-2">
-                                    <h2 class="font-bold"><?= $terms ?> School Year <?= $schoolyear ?></h2>
+                                    <h2 class="font-bold">
+                                    <?php
+                                        if ($terms == 'Prelim') {
+                                            echo 'First Term';
+                                        } elseif ($terms == 'Midterm') {
+                                            echo 'Second Term';
+                                        } elseif ($terms == 'Endterm') {
+                                            echo 'Third Term';
+                                        } else {
+                                            echo 'Unknown Term'; // This will be echoed if $terms doesn't match any of the specified terms
+                                        } 
+                                        ?> 
+                                        School Year 
+                                        <?= $schoolyear ?>
+                                    </h2>
                                 </div>
                             </div>
                         </div>
@@ -920,7 +945,7 @@ include './adminheader.php';
                                     $averageAveSup3 = 0;
                                     // Now $filterpeer2peer contains only the rows where 'type' is 'peer2peer'
                                     foreach ($filtersupervisor as $index => $scoreAve) {
-                                        if ($scoreAve['tits'] == 'TG2') {
+                                        if ($scoreAve['tits'] == 'TG3') {
                                             // Accumulate the scoreTG1 for average calculation
                                             $sumAveSup3 += $scoreAve['score'];
                                             $countAveSup3++;
@@ -974,7 +999,7 @@ include './adminheader.php';
                                     $averageAveSup4 = 0;
                                     // Now $filterpeer2peer contains only the rows where 'type' is 'peer2peer'
                                     foreach ($filtersupervisor as $index => $scoreAve) {
-                                        if ($scoreAve['tits'] == 'TG2') {
+                                        if ($scoreAve['tits'] == 'TG4') {
                                             // Accumulate the scoreTG1 for average calculation
                                             $sumAveSup4 += $scoreAve['score'];
                                             $countAveSup4++;
@@ -1430,69 +1455,72 @@ include './adminheader.php';
 <div id="tally-sheet" class="hidden">                      
     <div class="w-full flex flex-col gap-4 text-xs">
     <?php 
-                        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['evaluate'])) {
-                            // Your existing code for processing the form
-                        
-                            $terms = isset($_POST['term']) ? $_POST['term'] : "";
-                            $schoolyear = isset($_POST['schoolyear']) ? $_POST['schoolyear'] : "";
-                            $course = isset($_POST['course']) ? $_POST['course'] : "";
-                            $faculty_to_eval = isset($_POST['faculty_to_eval']) ? $_POST['faculty_to_eval'] : "";
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['evaluate'])) {
+            // Your existing code for processing the form
+        
+            $terms = isset($_POST['term']) ? $_POST['term'] : "";
+            $schoolyear = isset($_POST['schoolyear']) ? $_POST['schoolyear'] : "";
+            $course = isset($_POST['course']) ? $_POST['course'] : "";
+            $faculty_to_eval = isset($_POST['faculty_to_eval']) ? $_POST['faculty_to_eval'] : "";
 
-                            // Split the course into department and course
-                            list($dept, $courseFinal) = explode(' - ', $course, 2);
+            // Split the course into department and course
+            list($dept, $courseFinal) = explode(' - ', $course, 2);
 
-                            // Output for testing
-                            '$dept: ' . $dept . '<br>';
-                            '$courseFinal: ' . $courseFinal;
+            // Output for testing
+            '$dept: ' . $dept . '<br>';
+            '$courseFinal: ' . $courseFinal;
 
-                            // Split the string into parts
-                            $parts = explode(', ', $faculty_to_eval);
+            // Split the string into parts
+            $parts = explode(', ', $faculty_to_eval);
 
-                            // Assign values to variables
-                            $faculty_to_eval_lname = $parts[0];
-                            $faculty_to_eval_fname_mi = isset($parts[1]) ? $parts[1] : '';
+            // Assign values to variables
+            $faculty_to_eval_lname = $parts[0];
+            $faculty_to_eval_fname_mi = isset($parts[1]) ? $parts[1] : '';
 
-                            // Split the first_name_mi into first_name and mi
-                            $names = explode(' ', $faculty_to_eval_fname_mi);
-                            $faculty_to_eval_fname = implode(' ', array_slice($names, 0, -1));
-                            $faculty_to_eval_mi = end($names);
+            // Split the first_name_mi into first_name and mi
+            $names = explode(' ', $faculty_to_eval_fname_mi);
+            $faculty_to_eval_fname = implode(' ', array_slice($names, 0, -1));
+            $faculty_to_eval_mi = end($names);
 
-                            // Output for testing
-                            '$faculty_to_eval_lname: ' . $faculty_to_eval_lname . '<br>';
-                            '$faculty_to_eval_fname: ' . $faculty_to_eval_fname . '<br>';
-                            '$faculty_to_eval_mi: ' . $faculty_to_eval_mi;
+            // Output for testing
+            '$faculty_to_eval_lname: ' . $faculty_to_eval_lname . '<br>';
+            '$faculty_to_eval_fname: ' . $faculty_to_eval_fname . '<br>';
+            '$faculty_to_eval_mi: ' . $faculty_to_eval_mi;
 
-                            $sql = "SELECT * FROM `rate_score_tbl`
-                            INNER JOIN `accounts` ON `accounts`.`id` = `rate_score_tbl`.`gnrateid`
-                            WHERE `rate_score_tbl`.`term` LIKE '$terms' AND `rate_score_tbl`.`sy` LIKE '$schoolyear' AND `rate_score_tbl`.`course` LIKE '$course' AND `accounts`.`first_name` LIKE '$faculty_to_eval_fname' AND `accounts`.`last_name` LIKE '$faculty_to_eval_lname' AND `accounts`.`mi` LIKE '$faculty_to_eval_mi';";
+            $sql = "SELECT `rate_score_tbl`.`type` AS formType, 
+            `rate_score_tbl`.*, 
+            `accounts`.* FROM `rate_score_tbl`
+            INNER JOIN `accounts` ON `accounts`.`id` = `rate_score_tbl`.`gnrateid`
+            WHERE `rate_score_tbl`.`term` LIKE '$terms' AND `rate_score_tbl`.`sy` LIKE '$schoolyear' AND `rate_score_tbl`.`course` LIKE '$course' AND `accounts`.`first_name` LIKE '$faculty_to_eval_fname' AND `accounts`.`last_name` LIKE '$faculty_to_eval_lname' AND `accounts`.`mi` LIKE '$faculty_to_eval_mi';";
 
-                            
+            
 
-                            $stmt = $conn->prepare($sql);
-                            $result = mysqli_query($conn, $sql);
+            $stmt = $conn->prepare($sql);
+            $result = mysqli_query($conn, $sql);
 
-                            if ($result) {
-                                $scores = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                                // Filter the results based on the 'type' column
-                                $filterstudent = array_filter($scores, function($score) {
-                                    return $score['kind'] == 'student';
-                                });
+            if ($result) {
+                $scores = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                // Filter the results based on the 'type' column
+                $filterstudent = array_filter($scores, function($score) {
+                    return $score['kind'] == 'student';
+                });
 
-                                $filterpeer2peer = array_filter($scores, function($score) {
-                                    return $score['kind'] == 'faculty';
-                                });
+                $filterpeer2peer = array_filter($scores, function($score) {
+                    return $score['kind'] == 'faculty';
+                });
 
-                                $filtersupervisor = array_filter($scores, function($score) {
-                                    return $score['kind'] == 'supervisor';
-                                });
+                $filtersupervisor = array_filter($scores, function($score) {
+                    return $score['kind'] == 'supervisor';
+                });
 
-                                $filterself = array_filter($scores, function($score) use ($faculty_to_eval) {
-                                    return $score['name'] == $faculty_to_eval;
-                                });
-                                
+                $filterself = array_filter($scores, function($score) {
+                    return $score['formType'] == 'Self';
+                    ;
+                });
+                
 
-                                
-                    ?>                           
+                
+    ?>                           
         <header class="mb-6 flex flex-col gap-4">
             <div class="flex flex-col items-center text-center">
                 <div>
@@ -1503,7 +1531,20 @@ include './adminheader.php';
 
 
                     <div class="border-4 border-black px-2">
-                        <h2 class="font-bold"><?= $terms ?> School Year <?= $schoolyear ?></h2>
+                        <h2 class="font-bold">
+                            <?php
+                            if ($terms == 'Prelim') {
+                                echo 'First Term';
+                            } elseif ($terms == 'Midterm') {
+                                echo 'Second Term';
+                            } elseif ($terms == 'Endterm') {
+                                echo 'Third Term';
+                            } else {
+                                echo 'Unknown Term'; // This will be echoed if $terms doesn't match any of the specified terms
+                            } 
+                            ?> 
+                            School Year 
+                            <?= $schoolyear ?></h2>
                     </div>
                 </div>
             </div>
@@ -2244,7 +2285,7 @@ include './adminheader.php';
                         $averageAveSup3 = 0;
                         // Now $filterpeer2peer contains only the rows where 'type' is 'peer2peer'
                         foreach ($filtersupervisor as $index => $scoreAve) {
-                            if ($scoreAve['tits'] == 'TG2') {
+                            if ($scoreAve['tits'] == 'TG3') {
                                 // Accumulate the scoreTG1 for average calculation
                                 $sumAveSup3 += $scoreAve['score'];
                                 $countAveSup3++;
@@ -2298,7 +2339,7 @@ include './adminheader.php';
                         $averageAveSup4 = 0;
                         // Now $filterpeer2peer contains only the rows where 'type' is 'peer2peer'
                         foreach ($filtersupervisor as $index => $scoreAve) {
-                            if ($scoreAve['tits'] == 'TG2') {
+                            if ($scoreAve['tits'] == 'TG4') {
                                 // Accumulate the scoreTG1 for average calculation
                                 $sumAveSup4 += $scoreAve['score'];
                                 $countAveSup4++;
