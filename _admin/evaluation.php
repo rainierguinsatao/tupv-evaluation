@@ -44,19 +44,7 @@ include './adminheader.php';
                                 }
                                 foreach ($courses as $index => $course):
                             ?>
-                        <option value="<?= $course['term'] ?>">
-                            <?php 
-                            if ($course['term'] == 'Prelim') {
-                                echo 'First Term';
-                            } elseif ($course['term'] == 'Midterm') {
-                                echo 'Second Term';
-                            } elseif ($course['term'] == 'Endterm') {
-                                echo 'Third Term';
-                            } else {
-                                echo 'Unknown Term'; // This will be echoed if $terms doesn't match any of the specified terms
-                            }
-                            ?>
-                        </option>
+                        <option value="<?= $course['term'] ?>"><?= $course['term'] ?></option>
                         <?php endforeach; ?>
                         </select>
                     </div>
@@ -192,15 +180,7 @@ include './adminheader.php';
                                 <div class="border-4 border-black px-2">
                                     <h2 class="font-bold">
                                     <?php
-                                        if ($terms == 'Prelim') {
-                                            echo 'First Term';
-                                        } elseif ($terms == 'Midterm') {
-                                            echo 'Second Term';
-                                        } elseif ($terms == 'Endterm') {
-                                            echo 'Third Term';
-                                        } else {
-                                            echo 'Unknown Term'; // This will be echoed if $terms doesn't match any of the specified terms
-                                        } 
+                                        echo $terms;
                                         ?> 
                                         School Year 
                                         <?= $schoolyear ?>
@@ -1533,16 +1513,8 @@ include './adminheader.php';
                     <div class="border-4 border-black px-2">
                         <h2 class="font-bold">
                             <?php
-                            if ($terms == 'Prelim') {
-                                echo 'First Term';
-                            } elseif ($terms == 'Midterm') {
-                                echo 'Second Term';
-                            } elseif ($terms == 'Endterm') {
-                                echo 'Third Term';
-                            } else {
-                                echo 'Unknown Term'; // This will be echoed if $terms doesn't match any of the specified terms
-                            } 
-                            ?> 
+                            echo $terms;
+                            ?>
                             School Year 
                             <?= $schoolyear ?></h2>
                     </div>

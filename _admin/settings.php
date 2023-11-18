@@ -23,6 +23,7 @@ include './adminheader.php';
                 <a href="./add_settings.php" type="button" class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2">Add +</a>
             </div>
         </div>
+        <h1 class = "m-4 text-lg font-semibold">SETTINGS</h1>
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-6">
             <table id="myTable" class="w-full text-sm text-left p-3 rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 capitalized bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -70,7 +71,64 @@ include './adminheader.php';
                 </tbody>
             </table>
         </div>
+        <div>
+            <div class="shadow-md sm:rounded-lg p-6">
+            <form action="../php/updateTerm.php" method="POST">
+                <label for="term" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
+                <select id="term" name="selectedTerm" class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                <?php 
+                    $sql = "SELECT * FROM tem";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->get_result(); 
+
+                    while ($row = $result->fetch_assoc()): 
+                        if($row['term'] == "First Term") {
+                            ?>
+                            <option value="<?=$row['term']?>" selected><?=$row['term']?></option>
+                            <option value="Second Term">Second Term</option>
+                            <option value="Third Term">Third Term</option>
+                            <?php
+
+                        } else if($row['term'] == "Second Term") {
+                            ?>
+                            <option value="First Term">First Term</option>
+                            <option value="<?=$row['term']?>" selected><?=$row['term']?></option>
+                            <option value="Third Term">Third Term</option>
+                            <?php
+
+                        } else if($row['term'] == "Third Term") {
+                            ?>
+                            <option value="First Term">First Term</option>
+                            <option value="Second Term">Second Term</option>
+                            <option value="<?=$row['term']?>" selected><?=$row['term']?></option>
+                            <?php
+                        }
+                        ?>
+                        <!-- Use the value from the database row as the option value -->
+                    
+                    <?php endwhile; ?>
+
+                </select>
+                <!-- Add a submit button to submit the form -->
+                <button type="submit" name="updateTerm" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2">Update Term</button>
+            </form>
+
+            </div>
+        </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+    
 
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
