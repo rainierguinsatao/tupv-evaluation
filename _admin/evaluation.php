@@ -735,7 +735,7 @@ include './adminheader.php';
                                     }
                                     // Calculate the average
                                     if ($countAvep2p4 > 0) {
-                                        $averageAvep2p4 = $sumAvep2p4 / $countAvep2p3;
+                                        $averageAvep2p4 = $sumAvep2p4 / $countAvep2p4;
                                         echo number_format($averageAvep2p4, 4);
                                     } else {
                                         echo "N/A";
@@ -2075,7 +2075,7 @@ include './adminheader.php';
                         }
                         // Calculate the average
                         if ($countAvep2p4 > 0) {
-                            $averageAvep2p4 = $sumAvep2p4 / $countAvep2p3;
+                            $averageAvep2p4 = $sumAvep2p4 / $countAvep2p4;
                             echo number_format($averageAvep2p4, 4);
                         } else {
                             echo "N/A";

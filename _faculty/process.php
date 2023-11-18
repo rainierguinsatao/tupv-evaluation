@@ -4,6 +4,7 @@ include "../db/conn.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     list($gnrateid, $faculty_to_eval) = explode('|', $_POST['faculty_to_eval']);
     $ftype = $_POST['ftype'];
+    $ft = $_POST['ftype1'];
     $fn = $_POST['full_name'];
     $selectOption = $_POST['selectOption'];
     $course = $_POST['course'];
@@ -16,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $tits = $_POST['tits'][$qid];
 
 
-        if ($ftype == 'supervisor'){
+        if ($ftype == 'supervisor' && $ft == 'supervisor'){
             if ($selectOption == 'Supervisor' || $selectOption == 'Peer to Peer' || $selectOption == 'Self') {
                 // Insert into rate_score_tbl
                 $sql1 = "INSERT INTO rate_score_tbl (type, name, kind, course, term, sy, qid, tits, faculty, score, gnrateid, nagrateid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -59,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit();
             }
         }
-      else if ($ft == 'faculty'){
+      else if (($ft == 'faculty' && $ftype == 'supervisor') || ($ft == 'faculty' && $ftype == 'faculty')){
 
         if ($selectOption == 'Supervisor' || $selectOption == 'Peer to Peer' || $selectOption == 'Self') {
             // Insert into rate_score_tbl
@@ -106,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     // Optionally, you may redirect the user to a success page
-    header("Location: ../_faculty/faculty.php");
+    header("Location: ../_faculty/submitanother.php");
     exit();
 } else {
     // Handle invalid request method (e.g., someone accessing the page directly)
