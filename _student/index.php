@@ -93,11 +93,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label for="term" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Term <span class="text-[#C51E3A]">*</span></label>
                             <select id="term" name="term" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                                 <option selected disabled hidden value="">Choose Term</option>
-<<<<<<< HEAD
-                                <option value="Prelim">First Term</option>
-                                <option value="Midterm">Second Term</option>
-                                <option value="Endterm">Third Term</option>
-=======
                                 <?php
                                 $sql = "SELECT * FROM tem";
                                 $stmt = $conn->prepare($sql);
@@ -115,7 +110,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <option value="<?= $acc['term'] ?>"><?= $acc['term'] ?></option>
                             
                                 <?php endforeach;?> 
->>>>>>> dc651dc753285e602507cfe52b500d9728e6895f
                             </select>
                         </div>
                         <div>
