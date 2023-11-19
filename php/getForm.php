@@ -664,7 +664,7 @@ if ($selectedOption == 'Supervisor') {
             <?php endforeach ?>
         </div>
         <div>
-            <h5 class="mb-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">IV. Management of learninig</h5>
+            <h5 class="mb-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">IV. Management of learning</h5>
             <?php
                 $sql = "SELECT * FROM froms_tbl WHERE type = 'SELF' AND title = 'TITLE 4'";
                 $result = mysqli_query($conn, $sql);
@@ -677,7 +677,7 @@ if ($selectedOption == 'Supervisor') {
 
                 foreach ($questions as $index => $question): 
             ?>
-            <div class="flex"></div>
+            <div class="flex">
             <input type="hidden" name="tits[<?= $question['id'] ?>]" value="<?= $question['qid'] ?>">
                 <span class="m-2 text-gray-800"><?= ($index + 1) . "." ?></span>
                     

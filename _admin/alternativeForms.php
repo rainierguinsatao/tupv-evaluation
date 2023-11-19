@@ -9,6 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../images/Technological_University_of_the_Philippines_Seal.svg.png" type="image/png">
     <link href="../dist/output.css" rel="stylesheet">
     <title>FORMS | DASHBOARD</title>
 </head>
