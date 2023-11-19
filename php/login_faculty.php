@@ -16,12 +16,18 @@ if (isset($_POST['loginfacultybtn'])) {
             $_SESSION['email'] = $row['email'];
             $_SESSION['type'] = $row['type'];
             $acr = $row['first_name'];
+            $ft = $row['faculty_type'];
 
             $switchValue = $row['switch'];
             if ($switchValue == 1) {
                 $_SESSION['alertOff'] = $_SESSION['alertOff'] = "Welcome " . $acr . ", Ready to evaluate?";
                 $_SESSION['alertOffColor'] = "blue";
-                header('location:../_faculty/faculty.php');
+
+                if ($ft == 'supervisor') {
+                    header('location:../_faculty/supervisor.php');
+                } else {
+                    header('location:../_faculty/faculty.php');
+                }
             } else if ($switchValue == 0) {
                 $_SESSION['alertOff'] = " Evaluation has not started yet, Try again Later";
                 $_SESSION['alertOffColor'] = "blue";
@@ -33,13 +39,9 @@ if (isset($_POST['loginfacultybtn'])) {
             }
         }
     } else {
-
         header('location:../_faculty/');
     }
 }
-
-
-
 
 
 
