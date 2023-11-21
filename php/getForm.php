@@ -49,11 +49,25 @@ if ($selectedOption == 'Supervisor') {
 
             <label for="term" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Term <span class="text-[#C51E3A]">*</span></label>
             <select id="term" name="term" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-                <option selected disabled hidden value="">Choose Term</option>
-                <option value="Prelim">First Term</option>
-                <option value="Midterm">Second Term</option>
-                <option value="Endterm">Third Term</option>
-            </select>
+                                <option selected disabled hidden value="">Choose Term</option>
+                                <?php
+                                $sql = "SELECT * FROM tem";
+                                $stmt = $conn->prepare($sql);
+                                $result = mysqli_query($conn, $sql);
+                            
+                                if ($result) {
+                                    $accounts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                                } else {
+                                    echo "Error: " . mysqli_error($conn);
+                                }
+                            
+                                
+                                ?>
+                                <?php foreach ($accounts as $index => $acc): ?>
+                                <option value="<?= $acc['term'] ?>"><?= $acc['term'] ?></option>
+                            
+                                <?php endforeach;?> 
+                            </select>
         </div>
         <div>
             <label for="schoolyear" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">S.Y.</label>
@@ -302,11 +316,25 @@ if ($selectedOption == 'Supervisor') {
             
             <label for="term" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Term <span class="text-[#C51E3A]">*</span></label>
             <select id="term" name="term" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-                <option selected disabled hidden value="">Choose Term</option>
-                <option value="Prelim">First Term</option>
-                <option value="Midterm">Second Term</option>
-                <option value="Endterm">Third Term</option>
-            </select>
+                                <option selected disabled hidden value="">Choose Term</option>
+                                <?php
+                                $sql = "SELECT * FROM tem";
+                                $stmt = $conn->prepare($sql);
+                                $result = mysqli_query($conn, $sql);
+                            
+                                if ($result) {
+                                    $accounts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                                } else {
+                                    echo "Error: " . mysqli_error($conn);
+                                }
+                            
+                                
+                                ?>
+                                <?php foreach ($accounts as $index => $acc): ?>
+                                <option value="<?= $acc['term'] ?>"><?= $acc['term'] ?></option>
+                            
+                                <?php endforeach;?> 
+                            </select>
         </div>
         <div>
             <label for="schoolyear" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">S.Y.</label>
@@ -536,11 +564,25 @@ if ($selectedOption == 'Supervisor') {
         <div>
             <label for="term" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Term <span class="text-[#C51E3A]">*</span></label>
             <select id="term" name="term" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-                <option selected disabled hidden value="">Choose Term</option>
-                <option value="Prelim">First Term</option>
-                <option value="Midterm">Second Term</option>
-                <option value="Endterm">Third Term</option>
-            </select>
+                                <option selected disabled hidden value="">Choose Term</option>
+                                <?php
+                                $sql = "SELECT * FROM tem";
+                                $stmt = $conn->prepare($sql);
+                                $result = mysqli_query($conn, $sql);
+                            
+                                if ($result) {
+                                    $accounts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                                } else {
+                                    echo "Error: " . mysqli_error($conn);
+                                }
+                            
+                                
+                                ?>
+                                <?php foreach ($accounts as $index => $acc): ?>
+                                <option value="<?= $acc['term'] ?>"><?= $acc['term'] ?></option>
+                            
+                                <?php endforeach;?> 
+                            </select>
         </div>
         <div>
             <label for="schoolyear" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">S.Y.</label>
@@ -664,7 +706,7 @@ if ($selectedOption == 'Supervisor') {
             <?php endforeach ?>
         </div>
         <div>
-            <h5 class="mb-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">IV. Management of learninig</h5>
+            <h5 class="mb-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">IV. Management of learning</h5>
             <?php
                 $sql = "SELECT * FROM froms_tbl WHERE type = 'SELF' AND title = 'TITLE 4'";
                 $result = mysqli_query($conn, $sql);
@@ -677,7 +719,7 @@ if ($selectedOption == 'Supervisor') {
 
                 foreach ($questions as $index => $question): 
             ?>
-            <div class="flex"></div>
+            <div class="flex">
             <input type="hidden" name="tits[<?= $question['id'] ?>]" value="<?= $question['qid'] ?>">
                 <span class="m-2 text-gray-800"><?= ($index + 1) . "." ?></span>
                     
