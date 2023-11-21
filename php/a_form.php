@@ -141,7 +141,7 @@ if ($selectedOption == 'Peer to Peer') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -176,7 +176,7 @@ if ($selectedOption == 'Peer to Peer') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -210,7 +210,7 @@ if ($selectedOption == 'Peer to Peer') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -244,7 +244,7 @@ if ($selectedOption == 'Peer to Peer') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -337,7 +337,7 @@ if ($selectedOption == 'Peer to Peer') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -372,7 +372,7 @@ if ($selectedOption == 'Peer to Peer') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -382,7 +382,7 @@ if ($selectedOption == 'Peer to Peer') {
             <?php endforeach ?>
         </div>
         <div>
-            <h5 class="mb-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">III. Teaching for independent learninig</h5>
+            <h5 class="mb-2 text-lg bg-white font-semibold tracking-tight text-gray-900 dark:text-white">III. Teaching for independent learninig</h5>
             <?php
                 $sql = "SELECT * FROM froms_tbl WHERE type = 'SELF' AND title = 'TITLE 3'";
                 $result = mysqli_query($conn, $sql);
@@ -406,7 +406,7 @@ if ($selectedOption == 'Peer to Peer') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -440,7 +440,7 @@ if ($selectedOption == 'Peer to Peer') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
