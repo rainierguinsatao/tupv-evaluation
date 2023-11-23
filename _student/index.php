@@ -1,6 +1,12 @@
 <?php include '../db/conn.php';
 session_start();
 
+$characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+$code_length = 6;
+$uid = '';
+for ($i = 0; $i < $code_length; $i++) {
+    $uid .= $characters[rand(0, strlen($characters) - 1)];
+}
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -18,6 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $comms = $_POST['comms'];
     $type = "STUDENT";
     $ftype = "student";
+    $section = $_POST['section'];
     
 
     // Loop through the submitted scores
@@ -31,6 +38,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("sssssssssiss", $type, $name, $ftype, $modifiedCourseValue, $term, $schoolYear, $qid, $facultyArray[1], $facultyId, $score, $tits, $comms);
         $stmt->execute();
         $stmt->close();
+
+
+
+        $insertSql2 = "INSERT INTO rate_score_tbl2 (type, name, kind, course, term, sy, qid, faculty, gnrateid, score, tits, comms, studid, section) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt2 = $conn->prepare($insertSql2);
+        $stmt2->bind_param("sssssssssissss", $type, $name, $ftype, $modifiedCourseValue, $term, $schoolYear, $qid, $facultyArray[1], $facultyId, $score, $tits, $comms, $uid, $section);
+        $stmt2->execute();
+        $stmt2->close();
     }
     header("Location: success.php");
 }
