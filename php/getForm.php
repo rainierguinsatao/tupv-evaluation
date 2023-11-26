@@ -158,7 +158,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -193,7 +193,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -227,7 +227,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -261,7 +261,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -431,7 +431,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -466,7 +466,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -500,7 +500,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -534,7 +534,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -648,7 +648,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -683,7 +683,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required> 
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -717,7 +717,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -751,7 +751,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>

@@ -155,7 +155,7 @@ include './adminheader.php';
                         <div class="m-5">
                         
                         <select  id="courseDropdown" name="course"  class="block p-5 w-full text-sm text-gray-900 bg-white shadow-lg rounded-lg border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-60 cursor-pointer ">
-                            <option selected disabled>Filter (College - Department)</option>
+                            <option selected disabled hidden>Filter (College - Department)</option>
                             <?php
                             while ($row = $result->fetch_assoc()) :
                                 $dept_id = $row['dept_id'];
@@ -170,61 +170,30 @@ include './adminheader.php';
                             ?>
                 </select>
                 </div>
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase">
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    Name
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Peer Evaluated
-                </th>
-
-                <th scope="col" class="px-6 py-3">
-                    Self Evaluated
-                </th>
-
-                <th scope="col" class="px-6 py-3">
-                    Supervisor
-                </th>
-
-
-                <th scope="col" class="px-6 py-3">
-                    Total
-                </th>
-        
-        
-            </tr>
-        </thead>
-        <tbody>
-
-
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-bold text-lg text-dark ">
-                
-                </th>
-                <td class="px-6 py-4 text-lg font-bold text-red-700">
-               
-                </td>
-
-                <td class="px-6 py-4 text-lg font-bold text-red-700">
-               
-               </td>
-
-
-               <td  class="px-6 py-4 text-lg font-bold text-red-700">
-                    
-               </td>
-
-               <td id="totalColumn" class="px-6 py-4 text-lg font-bold text-red-700">
-                    
-                    </td>
-             
-              
-            </tr>
-            <?php //endwhile;?>
-        </tbody>
-    </table>
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Name
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Peer Evaluated
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Self Evaluated
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Supervisor
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Total
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultBody">
+                        <!-- Results will be dynamically added here -->
+                    </tbody>
+                </table>
     </div>
 
     
@@ -259,6 +228,45 @@ include './adminheader.php';
 <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
 
 <script>
+    $(document).ready(function () {
+        // Handle dropdown change event
+        $('#courseDropdown').change(function () {
+            var selectedOption = $(this).val();
+            // Send selected option to the server and get results
+            $.ajax({
+                url: 'facultyCount.php',
+                type: 'POST',
+                data: { option: selectedOption },
+                success: function (results) {
+                    results = JSON.parse(results);
+
+                    // Display results in the table
+                    displayResults(results);
+                }
+            });
+        });
+        // Function to display results in the table
+        function displayResults(results) {
+            // console.log(typeof results); // Check the type of results
+            // console.log(results);        // Check the content of results
+            // Clear the existing rows
+            $('#resultBody').empty();
+
+            // Iterate through the results and append rows to the table
+            $.each(results, function (index, result) {
+                var row = '<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">' +
+                    '<th scope="row" class="px-6 py-4 font-bold text-lg text-dark ">' + result.name + '</th>' +
+                    '<td class="px-6 py-4 text-lg font-bold text-red-700">' + result.peer_count + '</td>' +
+                    '<td class="px-6 py-4 text-lg font-bold text-red-700">' + result.self_count + '</td>' +
+                    '<td class="px-6 py-4 text-lg font-bold text-red-700">' + result.supervisor_count + '</td>' +
+                    '<td id="totalColumn" class="px-6 py-4 text-lg font-bold text-red-700">' + (result.peer_count + result.self_count + result.supervisor_count) + '</td>' +
+                    '</tr>';
+
+                $('#resultBody').append(row);
+            });
+        }
+
+    })
     document.getElementById('courseDropdown').addEventListener('change', function() {
         var selectedCourse = this.value;
         // Make an AJAX call to fetch the total count
