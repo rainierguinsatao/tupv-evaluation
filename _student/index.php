@@ -1,6 +1,12 @@
 <?php include '../db/conn.php';
 session_start();
 
+$characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+$code_length = 6;
+$uid = '';
+for ($i = 0; $i < $code_length; $i++) {
+    $uid .= $characters[rand(0, strlen($characters) - 1)];
+}
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -18,6 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $comms = $_POST['comms'];
     $type = "STUDENT";
     $ftype = "student";
+    $section = $_POST['section'];
     
 
     // Loop through the submitted scores
@@ -31,6 +38,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("sssssssssiss", $type, $name, $ftype, $modifiedCourseValue, $term, $schoolYear, $qid, $facultyArray[1], $facultyId, $score, $tits, $comms);
         $stmt->execute();
         $stmt->close();
+
+
+
+        $insertSql2 = "INSERT INTO rate_score_tbl2 (type, name, kind, course, term, sy, qid, faculty, gnrateid, score, tits, comms, studid, section) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt2 = $conn->prepare($insertSql2);
+        $stmt2->bind_param("sssssssssissss", $type, $name, $ftype, $modifiedCourseValue, $term, $schoolYear, $qid, $facultyArray[1], $facultyId, $score, $tits, $comms, $uid, $section);
+        $stmt2->execute();
+        $stmt2->close();
     }
     header("Location: success.php");
 }
@@ -66,7 +81,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">When evaluating teachers, honestly acknowledge their strengths, citing specific examples that impressed you, and express constructive concerns or suggestions for improvement. Thank you for your cooperation.</p>
                         </div>
                         <div>
+<<<<<<< HEAD
                             <label for="name-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name (Optional)</label>
+=======
+                            <label for="name-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name <span class="text-gray-400 italic">(optional)</span></label>
+>>>>>>> 678de8a181ffc5696e4264ee34c344361b0155c6
                             <input type="text" name="name" placeholder="Name" id="name-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         </div>
                         <div>
@@ -85,10 +104,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     }
                                     foreach ($courses as $index => $course):
                                 ?>
-                                    <option value="<?= $course['dept'] ?>|<?= $course['course'] ?>"><?= $course['dept'] ?> - <?= $course['course'] ?></option>
+                                    <option value="<?= $course['dept'] ?> - <?= $course['course'] ?>"><?= $course['dept'] ?> - <?= $course['course'] ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
+
+
+                        <div>
+                            <label for="section" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Section <span class="text-[#C51E3A]">*</span></label>
+                            <select id="section" name="section" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                            <option selected disabled hidden value="">Choose Section</option>
+                    
+                            </select>
+                        </div>
+
+
                         <div>
                             <label for="term" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Term <span class="text-[#C51E3A]">*</span></label>
                             <select id="term" name="term" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
@@ -112,19 +142,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <?php endforeach;?> 
                             </select>
                         </div>
+
+
+                        
                         <div>
                             <label for="schoolyear" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">S.Y.</label>
                             <select id="schoolyear" name = 'schoolyear' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                             <?php 
-                                $currentYear = date("Y");
-                                $endYear = $currentYear + 25; // Assuming you want options up to 75 years in the future
-
-                                for ($year = $currentYear; $year <= $endYear; $year++) {
-                                    $nextYear = $year + 1;
-                                    $schoolYear = $year . "-" . $nextYear;
-                                    echo "<option value='$schoolYear' name = 'schoolyear'>$schoolYear</option>";
+                                $sql = "SELECT * FROM sy";
+                                $stmt = $conn->prepare($sql);
+                                $result = mysqli_query($conn, $sql);
+                            
+                                if ($result) {
+                                    $accounts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                                } else {
+                                    echo "Error: " . mysqli_error($conn);
                                 }
-                            ?>
+                            
+                                
+                                ?>
+                                <?php foreach ($accounts as $index => $acc): ?>
+                                <option value="<?= $acc['sy'] ?>"><?= $acc['sy'] ?></option>
+                            
+                                <?php endforeach;?>
                             </select>
                         </div>
                     </div>
@@ -167,7 +207,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php 
                                 for ($i = 1; $i <= 5; $i++): ?>
                                 <div class="items-center flex mx-auto">
-                                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                                     <br>
                                     <h1><?= $i ?></h1>
                                 </div>
@@ -202,7 +242,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php 
                                 for ($i = 1; $i <= 5; $i++): ?>
                                 <div class="items-center flex mx-auto">
-                                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                                     <br>
                                     <h1><?= $i ?></h1>
                                 </div>
@@ -236,7 +276,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php 
                                 for ($i = 1; $i <= 5; $i++): ?>
                                 <div class="items-center flex mx-auto">
-                                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                                     <br>
                                     <h1><?= $i ?></h1>
                                 </div>
@@ -270,7 +310,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php 
                                 for ($i = 1; $i <= 5; $i++): ?>
                                 <div class="items-center flex mx-auto">
-                                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                                     <br>
                                     <h1><?= $i ?></h1>
                                 </div>
@@ -290,7 +330,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
            
             <textarea id="comment" rows="6"
                 name = "comms" class="px-0 w-full text-sm text-gray-900 border-0  dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+<<<<<<< HEAD
                 placeholder="Write a comment..."></textarea>
+=======
+                placeholder="Write a comment..." ></textarea>
+>>>>>>> 678de8a181ffc5696e4264ee34c344361b0155c6
         </div>  
             </div>
             </div>
@@ -310,41 +354,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
 
 <script>
-    // Add event listener to the course dropdown
+ 
     var courseDropdown = document.getElementById('course');
     var facultyDropdown = document.getElementById('faculty_to_eval');
-    // Initially disable the faculty dropdown
+    
+
     facultyDropdown.disabled = true;
     facultyDropdown.innerHTML = '<option selected disabled hidden value="">Choose course first</option>';
 
     courseDropdown.addEventListener('change', function() {
-        // Get the selected course value
+
         var selectedCourse = this.value;
-        const selectedArray = selectedCourse.split('|');
+        const selectedArray = selectedCourse.split(' - ');
         if (selectedCourse === '') {
-            // If no course is selected, disable the faculty dropdown
+       
             facultyDropdown.innerHTML = '<option selected disabled hidden value="">Choose course first</option>';
             facultyDropdown.disabled = true;
         } else {
-            // Make an AJAX request to fetch faculty members based on the selected course
+        
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    // Parse the JSON response
+          
                     var facultyOptions = JSON.parse(this.responseText);
 
-                    // Update the faculty member dropdown options
+       
                     facultyDropdown.innerHTML = '<option selected disabled hidden value="">Choose</option>';
                     for (var i = 0; i < facultyOptions.length; i++) {
                         facultyDropdown.innerHTML += '<option value="' + facultyOptions[i].value + '">' + facultyOptions[i].text + '</option>';
                     }
 
-                    // Enable the faculty dropdown
                     facultyDropdown.disabled = false;
                 }
             };
 
-            // Send the AJAX request with the correct path
+    
             xhttp.open('GET', '../php/get_faculty_options.php?course=' + selectedArray[1] + '&dept=' + selectedArray[0], true);
             xhttp.send();
             
@@ -358,13 +402,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Get the selected option
         var selectedFaculty = facultyDropdown.options[facultyDropdown.selectedIndex];
 
-        // Get the value attribute of the selected option
+
         var selectedFacultyValue = selectedFaculty.value;
         const facultyArray = selectedFacultyValue.split('|');
 
-        // Set the value of the input field
+
         facultyId.value = facultyArray[0];
     });
+</script>
+
+<script>
+   document.getElementById('course').addEventListener('change', function () {
+
+    var selectedCourse = this.value;
+    console.log(selectedCourse)
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '../php/get_sections.php?course=' + selectedCourse, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+        
+            var sectionDropdown = document.getElementById('section');
+            sectionDropdown.innerHTML = xhr.responseText;
+
+            sectionDropdown.disabled = false;
+        }
+    };
+    xhr.send();
+});
 </script>
 </body>
 </html>

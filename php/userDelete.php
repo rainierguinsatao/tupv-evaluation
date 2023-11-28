@@ -26,3 +26,8 @@ if (isset($_GET['delsettings'])) {
     exit(); // Always exit after sending a location header
 }
 ?>
+
+
+
+
+deltg1btn

@@ -73,15 +73,22 @@ if ($selectedOption == 'Supervisor') {
             <label for="schoolyear" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">S.Y.</label>
             <select id="schoolyear" name = 'schoolyear' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
             <?php 
-                $currentYear = date("Y");
-                $endYear = $currentYear + 25; // Assuming you want options up to 75 years in the future
-
-                for ($year = $currentYear; $year <= $endYear; $year++) {
-                    $nextYear = $year + 1;
-                    $schoolYear = $year . "-" . $nextYear;
-                    echo "<option value='$schoolYear' name = 'schoolyear'>$schoolYear</option>";
-                }
-            ?>
+                 $sql = "SELECT * FROM sy";
+                 $stmt = $conn->prepare($sql);
+                 $result = mysqli_query($conn, $sql);
+             
+                 if ($result) {
+                     $accounts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                 } else {
+                     echo "Error: " . mysqli_error($conn);
+                 }
+             
+                 
+                 ?>
+                 <?php foreach ($accounts as $index => $acc): ?>
+                 <option value="<?= $acc['sy'] ?>"><?= $acc['sy'] ?></option>
+             
+                 <?php endforeach;?>
             </select>
         </div>
     </div>
@@ -151,7 +158,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -186,7 +193,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -220,7 +227,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -254,7 +261,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -340,15 +347,22 @@ if ($selectedOption == 'Supervisor') {
             <label for="schoolyear" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">S.Y.</label>
             <select id="schoolyear" name = 'schoolyear' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
             <?php 
-                $currentYear = date("Y");
-                $endYear = $currentYear + 25; // Assuming you want options up to 75 years in the future
-
-                for ($year = $currentYear; $year <= $endYear; $year++) {
-                    $nextYear = $year + 1;
-                    $schoolYear = $year . "-" . $nextYear;
-                    echo "<option value='$schoolYear' name = 'schoolyear'>$schoolYear</option>";
-                }
-            ?>
+                 $sql = "SELECT * FROM sy";
+                 $stmt = $conn->prepare($sql);
+                 $result = mysqli_query($conn, $sql);
+             
+                 if ($result) {
+                     $accounts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                 } else {
+                     echo "Error: " . mysqli_error($conn);
+                 }
+             
+                 
+                 ?>
+                 <?php foreach ($accounts as $index => $acc): ?>
+                 <option value="<?= $acc['sy'] ?>"><?= $acc['sy'] ?></option>
+             
+                 <?php endforeach;?>
             </select>
         </div>
     </div>
@@ -417,7 +431,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -452,7 +466,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -486,7 +500,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -520,7 +534,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -588,15 +602,22 @@ if ($selectedOption == 'Supervisor') {
             <label for="schoolyear" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">S.Y.</label>
             <select id="schoolyear" name = 'schoolyear' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
             <?php 
-                $currentYear = date("Y");
-                $endYear = $currentYear + 25; // Assuming you want options up to 75 years in the future
-
-                for ($year = $currentYear; $year <= $endYear; $year++) {
-                    $nextYear = $year + 1;
-                    $schoolYear = $year . "-" . $nextYear;
-                    echo "<option value='$schoolYear' name = 'schoolyear'>$schoolYear</option>";
-                }
-            ?>
+                 $sql = "SELECT * FROM sy";
+                 $stmt = $conn->prepare($sql);
+                 $result = mysqli_query($conn, $sql);
+             
+                 if ($result) {
+                     $accounts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                 } else {
+                     echo "Error: " . mysqli_error($conn);
+                 }
+             
+                 
+                 ?>
+                 <?php foreach ($accounts as $index => $acc): ?>
+                 <option value="<?= $acc['sy'] ?>"><?= $acc['sy'] ?></option>
+             
+                 <?php endforeach;?>
             </select>
         </div>
     </div>
@@ -627,7 +648,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -662,7 +683,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required> 
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -696,7 +717,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>
@@ -730,7 +751,7 @@ if ($selectedOption == 'Supervisor') {
             <?php 
                 for ($i = 1; $i <= 5; $i++): ?>
                 <div class="items-center flex mx-auto">
-                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2">
+                    <input type="radio" id="q<?= $question['id'] ?>_rating<?= $i ?>" name="question[<?= $question['id'] ?>]_rating" value="<?= $i ?>" class="m-2" required>
                     <br>
                     <h1><?= $i ?></h1>
                 </div>

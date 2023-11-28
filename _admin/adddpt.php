@@ -5,12 +5,12 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve form data
     $deptName = $_POST['dept_name'];
-    $courseName = $_POST['course_name'];
+
 
     // Update user information in the database
-    $sql = "INSERT INTO courses_tbl SET courseName = ?, dept = ?";
+    $sql = "INSERT INTO departmenttbl SET dept = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $courseName, $deptName);
+    $stmt->bind_param("s", $deptName);
 
     if ($stmt->execute()) {
         header("location: ./settings.php");
@@ -35,40 +35,18 @@ include './adminheader.php';
 <div class="sm:ml-64 mt-14">
     <div class="p-4">
         <h1 class = "font-medium text-gray-600 my-10">
-            Add New Course.
+            Add New Department
         </h1> 
         
         <div class="w-full border border-gray-200 rounded-lg shadow py-7 px-6">
             <form id="addSettings" action="" method="post">
                 <div class="flex gap-6 pt-2">
-                    <div class="relative z-0 w-full mb-6 group">
-                
-                    <?php
-                        $sql = "SELECT * FROM departmenttbl";
-                        $stmt = $conn->prepare($sql);
-                        $stmt->execute();
-                        $data = array();
-                        $result = $stmt->get_result();
-                        ?>
-                        <select name="dept_name" id="floating_dept_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
-                            <?php
-                            while ($row = $result->fetch_assoc()) :
-                                $dept_id = $row['dept_id']; // Assuming the primary key of the departmenttbl is 'dept_id'
-                                $dept_name = $row['dept']; // Change 'dept' to the actual column name
-
-                               ?>
-                              <option value="<?php echo $dept_name?>"><?php echo $dept_name?></option>
-                               <?php
-                              
-                            endwhile;
-                            ?>
-                </select>
-                    </div>
+        
 
 
 
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="course_name" id="floating_course_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"/>
+                        <input type="text" name="dept_name" id="floating_course_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"/>
                         <label for="floating_course_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Course Name</label>
                     </div>
                     <input type="hidden" name="id" value="<?php echo $user['id']; ?>">

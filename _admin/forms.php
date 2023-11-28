@@ -16,26 +16,6 @@
 <?php
     include './adminheader.php';
 
-
-    
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Loop through each question and update it in the database
-        foreach ($_POST['question'] as $id => $question) {
-            // Use a prepared statement to handle special characters
-            $stmt = $conn->prepare("UPDATE froms_tbl SET question=? WHERE id=?");
-            
-            // Bind parameters
-            $stmt->bind_param("si", $question, $id);
-            
-            // Execute the statement
-            if (!$stmt->execute()) {
-                echo "Error updating record: " . $stmt->error;
-            }
-    
-            // Close the statement
-            $stmt->close();
-        }
-    }
     ?>
     
 
@@ -72,7 +52,7 @@
      <div class="w-full-screen bg-white rounded-lg shadow dark:border md:mt-0 xl:p-0 dark:bg-gray-800 dark:border-gray-700">
          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
            
-         <form id="generalForm" class="space-y-4 md:space-y-6" action="#" method="post">
+         <form id="generalForm" class="space-y-4 md:space-y-6" action="../php/inserttoforms.php" method="post">
 
                 <h1 class = "text-sm font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">I. COMMITMENT</h1>
              <?php
@@ -89,8 +69,23 @@
    <div class="flex">
        <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
        <input type="text" name="question[<?= $question['id'] ?>]" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="<?= $question['question'] ?>">
+       <button type = "submit" name= "deltg1btn" value="<?= $question['id'] ?>" onclick="return confirm('Delete question?');" class = "bg-red-800  rounded-lg text-white p-3 m-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+</svg>
+             </button>
    </div>
 <?php endforeach; ?>
+<div class="flex">
+
+
+<input type="text"  name = "newtg1" placeholder="Add new questions to form" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+<button type = "submit" onclick="return confirm('Are you sure you want to Add another question to the form?');" name= "tg1btn" class = "bg-blue-500  rounded-lg text-white p-3 m-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+</svg>
+</button>
+
+
+</div>
 
 
 
@@ -112,8 +107,23 @@
    <div class="flex">
        <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
        <input type="text" name="question[<?= $question['id'] ?>]" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="<?= $question['question'] ?>">
+       <button type = "submit" name= "deltg2btn" value="<?= $question['id'] ?>" onclick="return confirm('Delete question?');" class = "bg-red-800  rounded-lg text-white p-3 m-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+</svg>
+             </button>
    </div>
 <?php endforeach; ?>
+
+<div class="flex">
+
+<input type="text"  name = "newtg2" placeholder="Add new questions to form" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+<button type = "submit" onclick="return confirm('Are you sure you want to Add another question to the form?');" name= "tg2btn" class = "bg-blue-500  rounded-lg text-white p-3 m-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+</svg>
+</button>
+
+
+</div>
 
 
 
@@ -134,8 +144,22 @@
    <div class="flex">
        <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
        <input type="text" name="question[<?= $question['id'] ?>]" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="<?= $question['question'] ?>">
+       <button type = "submit" name= "deltg3btn" value="<?= $question['id'] ?>" onclick="return confirm('Delete question?');" class = "bg-red-800  rounded-lg text-white p-3 m-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+</svg>
+             </button>
    </div>
 <?php endforeach; ?>
+<div class="flex">
+
+<input type="text"  name = "newtg3" placeholder="Add new questions to form" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+<button type = "submit" onclick="return confirm('Are you sure you want to Add another question to the form?');" name= "tg3btn" class = "bg-blue-500  rounded-lg text-white p-3 m-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+</svg>
+</button>
+
+
+</div>
 
 
 
@@ -156,12 +180,27 @@
    <div class="flex">
        <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
        <input type="text" name="question[<?= $question['id'] ?>]" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="<?= $question['question'] ?>">
+       <button type = "submit" name= "deltg4btn" value="<?= $question['id'] ?>" onclick="return confirm('Delete question?');" class = "bg-red-800  rounded-lg text-white p-3 m-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+</svg>
+             </button>
    </div>
 <?php endforeach; ?>
 
+<div class="flex">
+
+<input type="text"  name = "newtg4" placeholder="Add new questions to form" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+<button type = "submit" onclick="return confirm('Are you sure you want to Add another question to the form?');" name= "tg4btn" class = "bg-blue-500  rounded-lg text-white p-3 m-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+</svg>
+</button>
+
+
+</div>
+
 
                <div class = "m-6">
-               <button type="submit" class="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-md px-5 py-2.5 text-center" onclick="return confirm('Are you sure you want to update the form?'); showAlert();">Update Form</button>
+               <button type="submit" name = "updategeneral" class="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-md px-5 py-2.5 text-center" onclick="return confirm('Are you sure you want to update the form?'); showAlert();">Update Form</button>
                  </div>
               
           
@@ -176,7 +215,7 @@
 
 
 
-    <!-- SELF FORM TAB ----------------- -->
+    <!-- SELF FORM TAB ------------------------------------------------------------------- -->
 
 
     <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
@@ -203,8 +242,24 @@
    <div class="flex">
        <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
        <input type="text" name="question[<?= $question['id'] ?>]" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="<?= $question['question'] ?>">
+       <button type = "submit" name= "delts1btn" value="<?= $question['id'] ?>" onclick="return confirm('Delete question?');" class = "bg-red-800  rounded-lg text-white p-3 m-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+</svg>
+             </button>
+       
    </div>
 <?php endforeach; ?>
+
+<div class="flex">
+
+<input type="text"  name = "newts1" placeholder="Add new questions to form" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+<button type = "submit" onclick="return confirm('Are you sure you want to Add another self question to the form?');" name= "ts1btn" class = "bg-blue-500  rounded-lg text-white p-3 m-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+</svg>
+</button>
+
+
+</div>
 
 
 
@@ -226,8 +281,24 @@
    <div class="flex">
        <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
        <input type="text" name="question[<?= $question['id'] ?>]" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="<?= $question['question'] ?>">
+       <button type = "submit" name= "delts2btn" value="<?= $question['id'] ?>" onclick="return confirm('Delete question?');" class = "bg-red-800  rounded-lg text-white p-3 m-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+</svg>
+             </button>
+       
    </div>
 <?php endforeach; ?>
+
+<div class="flex">
+
+<input type="text"  name = "newts2" placeholder="Add new questions to form" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+<button type = "submit" onclick="return confirm('Are you sure you want to Add another self question to the form?');" name= "ts2btn" class = "bg-blue-500  rounded-lg text-white p-3 m-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+</svg>
+</button>
+
+
+</div>
 
 
 
@@ -248,8 +319,24 @@
    <div class="flex">
        <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
        <input type="text" name="question[<?= $question['id'] ?>]" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="<?= $question['question'] ?>">
+       <button type = "submit" name= "delts3btn" value="<?= $question['id'] ?>" onclick="return confirm('Delete question?');" class = "bg-red-800  rounded-lg text-white p-3 m-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+</svg>
+             </button>
+       
    </div>
 <?php endforeach; ?>
+
+<div class="flex">
+
+<input type="text"  name = "newts3" placeholder="Add new questions to form" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+<button type = "submit" onclick="return confirm('Are you sure you want to Add another self question to the form?');" name= "ts3btn" class = "bg-blue-500  rounded-lg text-white p-3 m-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+</svg>
+</button>
+
+
+</div>
 
 
 
@@ -270,14 +357,30 @@
    <div class="flex">
        <span class="m-4 text-gray-600"><?= ($index + 1) . "." ?></span>
        <input type="text" name="question[<?= $question['id'] ?>]" id="question" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="" required="" value="<?= $question['question'] ?>">
+       <button type = "submit" name= "delts4btn" value="<?= $question['id'] ?>" onclick="return confirm('Delete question?');" class = "bg-red-800  rounded-lg text-white p-3 m-2"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+</svg>
+             </button>
+       
    </div>
 <?php endforeach; ?>
+
+<div class="flex">
+
+<input type="text"  name = "newts4" placeholder="Add new questions to form" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+<button type = "submit" onclick="return confirm('Are you sure you want to Add another self question to the form?');" name= "ts4btn" class = "bg-blue-500  rounded-lg text-white p-3 m-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+  <path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+</svg>
+</button>
+
+
+</div>
 
            
 
 
                <div class = "m-6">
-               <button type="submit" class="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-md px-5 py-2.5 text-center" onclick="return confirm('Are you sure you want to update the form?'); showAlertS();">Update Self Form</button>
+               <button type="submit" name = "updateself" class="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-md px-5 py-2.5 text-center" onclick="return confirm('Are you sure you want to update the form?'); showAlertS();">Update Self Form</button>
 
                  </div>
               
